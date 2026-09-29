@@ -1,0 +1,29 @@
+.hero-atmosphere {
+  --cloud-saturation: 1.2;
+  --cloud-contrast: 1.06;
+  --cloud-ambient-distance: 112;
+  --cloud-drift-speed: .052;
+  --cloud-cursor-radius: 570;
+  --cloud-stir-distance: 78;
+  --cloud-follow-speed: 7;
+  --cloud-wake-speed: 3.1;
+  --cloud-return-speed: 1.65;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  background: #f6f5f1 url("assets/hero-default-preview-v2.png") center / cover no-repeat;
+  filter: saturate(var(--cloud-saturation)) contrast(var(--cloud-contrast));
+  contain: paint;
+}
+
+.hero-atmosphere canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-atmosphere canvas[hidden] { display: none; }
