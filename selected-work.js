@@ -13,6 +13,7 @@
   const entries = projects.map((project, position) => {
     const item = document.createElement('li');
     item.className = 'work-index-item';
+    item.dataset.project = project.id;
     const heading = document.createElement('h3');
     heading.className = 'work-index-heading';
     const button = document.createElement('button');
@@ -125,4 +126,99 @@
   window.addEventListener('wheel', () => section.removeAttribute('data-keyboard'), { passive: true });
   new ResizeObserver(schedule).observe(section.querySelector('.work-projects'));
   syncLayout();
+})();
+
+(() => {
+  const links = [...document.querySelectorAll('.work-visual-link:has(.work-hover-cursor)')];
+  if (!links.length) return;
+
+  const canHover = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+  const arrowSize = 28;
+  const gap = 14;
+
+  links.forEach(link => {
+    const visual = link.querySelector('.work-visual');
+    const cursor = link.querySelector('.work-hover-cursor');
+    const label = link.querySelector('.work-hover-label');
+    if (!visual || !cursor || !label) return;
+
+    const state = {
+      targetX: 0,
+      targetY: 0,
+      x: 0,
+      y: 0,
+      labelX: arrowSize + gap,
+      labelY: 16,
+      frame: 0,
+      initialized: false
+    };
+
+    function getLabelTargetX() {
+      const width = label.offsetWidth || 142;
+      const right = state.targetX + arrowSize + gap;
+      return right + width <= visual.clientWidth - 14
+        ? right
+        : Math.max(14, state.targetX - width - gap);
+    }
+
+    function paint() {
+      cursor.style.setProperty('--cursor-x', `${state.x}px`);
+      cursor.style.setProperty('--cursor-y', `${state.y}px`);
+      cursor.style.setProperty('--label-x', `${state.labelX - state.x}px`);
+      cursor.style.setProperty('--label-y', `${state.labelY - state.y}px`);
+    }
+
+    function render() {
+      const labelTargetX = getLabelTargetX();
+      const labelTargetY = Math.min(state.targetY + 16, visual.clientHeight - label.offsetHeight - 14);
+      state.x += (state.targetX - state.x) * .34;
+      state.y += (state.targetY - state.y) * .34;
+      state.labelX += (labelTargetX - state.labelX) * .2;
+      state.labelY += (labelTargetY - state.labelY) * .2;
+      paint();
+
+      const moving = Math.abs(state.targetX - state.x) > .08 ||
+        Math.abs(state.targetY - state.y) > .08 ||
+        Math.abs(labelTargetX - state.labelX) > .08 ||
+        Math.abs(labelTargetY - state.labelY) > .08;
+      state.frame = moving ? requestAnimationFrame(render) : 0;
+    }
+
+    function start() {
+      if (!state.frame) state.frame = requestAnimationFrame(render);
+    }
+
+    function position(event) {
+      const bounds = visual.getBoundingClientRect();
+      state.targetX = Math.min(Math.max(0, event.clientX - bounds.left), bounds.width - arrowSize);
+      state.targetY = Math.min(Math.max(0, event.clientY - bounds.top), bounds.height - arrowSize);
+      if (!state.initialized) {
+        state.x = state.targetX;
+        state.y = state.targetY;
+        state.labelX = getLabelTargetX();
+        state.labelY = Math.min(state.targetY + 16, visual.clientHeight - label.offsetHeight - 14);
+        state.initialized = true;
+        paint();
+      }
+      start();
+    }
+
+    link.addEventListener('pointerenter', event => {
+      if (!canHover.matches || event.pointerType === 'touch') return;
+      position(event);
+      link.setAttribute('data-cursor-open', '');
+    });
+    link.addEventListener('pointermove', event => {
+      if (!canHover.matches || event.pointerType === 'touch') return;
+      position(event);
+    }, { passive: true });
+    link.addEventListener('pointerleave', () => link.removeAttribute('data-cursor-open'));
+    link.addEventListener('pointercancel', () => link.removeAttribute('data-cursor-open'));
+    canHover.addEventListener('change', () => {
+      link.removeAttribute('data-cursor-open');
+      state.initialized = false;
+      cancelAnimationFrame(state.frame);
+      state.frame = 0;
+    });
+  });
 })();

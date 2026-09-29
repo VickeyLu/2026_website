@@ -42,6 +42,16 @@
   letter-spacing: -.025em;
   overflow-wrap: break-word;
 }
+.selected-work .work-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.selected-work .work-title a:focus-visible,
+.selected-work .work-project-cta:focus-visible,
+.selected-work .work-visual-link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 5px;
+}
 .selected-work .work-project-details { padding-top: 12px; }
 .selected-work .work-company,
 .selected-work .work-description {
@@ -53,12 +63,115 @@
   color: var(--work-secondary);
 }
 .selected-work .work-description { margin-top: 10px; }
+
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-title,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-title {
+  max-width: none;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-project-details,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-project-details {
+  padding-top: 12px;
+}
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-company,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-company {
+  max-width: none;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -.02em;
+}
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-description,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-description {
+  max-width: 56ch;
+  margin-top: 12px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+.selected-work .work-project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 12px;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: .06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.selected-work .work-project-cta span { transition: transform 180ms var(--work-ease); }
+.selected-work .work-visual-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
 .selected-work .work-visual {
+  position: relative;
   width: 100%;
   aspect-ratio: 1.48;
   margin: 0;
   overflow: hidden;
   border-radius: 4px;
+}
+.selected-work .work-hover-cursor {
+  --cursor-x: 0px;
+  --cursor-y: 0px;
+  --label-x: 40px;
+  --label-y: 16px;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
+  transition: opacity 140ms cubic-bezier(.16, 1, .3, 1);
+}
+.selected-work .work-visual-link[data-cursor-open] .work-hover-cursor { opacity: 1; }
+.selected-work .work-hover-arrow {
+  display: block;
+  width: 28px;
+  height: 28px;
+  overflow: visible;
+  fill: var(--highlight);
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  transform: rotate(-13deg);
+  transform-origin: 5px 5px;
+}
+.selected-work .work-hover-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-height: 46px;
+  padding: 11px 17px;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  background: var(--highlight);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+  transform: translate3d(var(--label-x), var(--label-y), 0);
 }
 .selected-work .work-visual img,
 .selected-work .work-visual video {
@@ -138,7 +251,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .selected-work .work-visual-link:has(.work-hover-cursor) { cursor: none; }
   .selected-work .work-index-trigger:hover { color: var(--ink); }
+  .selected-work .work-title a:hover { text-decoration: underline; text-underline-offset: .18em; }
+  .selected-work .work-project-cta:hover span { transform: translate(2px, -2px); }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .selected-work .work-hover-cursor { display: none; }
 }
 
 @media (max-width: 899px), (max-height: 619px) {
@@ -154,6 +274,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .selected-work .work-hover-cursor { display: none; transition: none; }
   .selected-work .work-index-trigger,
   .selected-work .work-index-details,
   .selected-work .work-index-item::before { transition: none; }
