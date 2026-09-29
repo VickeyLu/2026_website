@@ -3,14 +3,13 @@
   --cloud-contrast: 1.06;
   --cloud-ambient-distance: 112;
   --cloud-drift-speed: .052;
-  --cloud-cursor-radius: 570;
-  --cloud-stir-distance: 78;
-  --cloud-follow-speed: 7;
-  --cloud-wake-speed: 3.1;
-  --cloud-return-speed: 1.65;
   position: absolute;
   z-index: 0;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(100%, calc(var(--hero-max-width) + 160px));
+  transform: translateX(-50%);
   overflow: hidden;
   pointer-events: none;
   user-select: none;
@@ -27,3 +26,10 @@
 }
 
 .hero-atmosphere canvas[hidden] { display: none; }
+
+@media (min-width: 1721px) {
+  .hero-atmosphere {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+}

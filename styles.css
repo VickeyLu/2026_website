@@ -5,6 +5,10 @@
   --muted: #72777b;
   --soft: #dfd7ca;
   --highlight: #caff13;
+  --page-gutter: clamp(32px, 5vw, 96px);
+  --hero-content-width: clamp(1040px, 78vw, 1280px);
+  --hero-copy-outset: clamp(16px, calc(16px + (100vw - 1100px) * .22), 56px);
+  --hero-portrait-inset: clamp(0px, calc((100vw - 1520px) * .24), 48px);
 }
 
 * { box-sizing: border-box; }
@@ -62,6 +66,19 @@ body {
   background: rgba(246, 245, 241, .84);
   box-shadow: 0 10px 24px rgba(18, 35, 52, .08);
   backdrop-filter: blur(12px);
+}
+
+@media (min-width: 1101px) {
+  .nav-shell {
+    width: calc(min(calc(100% - 2 * var(--page-gutter)), var(--hero-content-width)) + var(--hero-copy-outset) - var(--hero-portrait-inset));
+    margin-left: calc((100% - min(calc(100% - 2 * var(--page-gutter)), var(--hero-content-width))) / 2 - var(--hero-copy-outset));
+    margin-right: 0;
+    padding-inline: 0;
+  }
+
+  .site-header[data-scrolled] .nav-shell {
+    margin-inline: auto;
+  }
 }
 
 .site-header .brand {
@@ -136,23 +153,50 @@ body {
 }
 
 .hero {
+  --hero-max-width: 1560px;
+  --hero-column-gap: clamp(20px, 2.5vw, 48px);
   position: relative;
-  height: max(760px, 100svh);
-  min-height: 850px;
-  max-height: 980px;
+  height: 100svh;
+  min-height: 720px;
   overflow: hidden;
 }
 
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  width: min(calc(100% - 2 * var(--page-gutter)), var(--hero-max-width));
+  height: 100%;
+  margin-inline: auto;
+}
+
+.hero-composition {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
+  column-gap: var(--hero-column-gap);
+  width: min(100%, var(--hero-content-width));
+  height: 100%;
+  margin-inline: auto;
+  align-items: end;
+}
+
 .hero-copy {
-  position: absolute;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
   z-index: 2;
-  left: clamp(38px, 3.55vw, 58px);
-  top: clamp(176px, 20vh, 204px);
+  width: max-content;
+  max-width: 100%;
+  margin-top: clamp(176px, 20vh, 204px);
+}
+
+@media (min-width: 1101px) {
+  .hero-copy { margin-left: calc(-1 * var(--hero-copy-outset)); }
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(104px, 7.5vw, 120px);
+  font-size: clamp(88px, 6.8vw, 108px);
   line-height: 1.1;
   letter-spacing: -0.068em;
   font-weight: 400;
@@ -186,12 +230,16 @@ h1 strong { font-weight: 800; }
 .credentials p { margin: 0; max-width: 65ch; font-size: 17px; line-height: 1.7; font-weight: 500; text-wrap: pretty; }
 
 .portrait {
-  position: absolute;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  align-self: end;
   z-index: 1;
-  width: min(1100px, 72vw);
+  width: clamp(760px, 55.5vw, 860px);
   height: auto;
-  right: -55px;
-  bottom: -230px;
+  max-height: calc(100% - 72px);
+  position: relative;
+  right: var(--hero-portrait-inset);
   pointer-events: none;
 }
 
@@ -275,8 +323,6 @@ h1 strong { font-weight: 800; }
 .route { stroke-width: 3.2; }
 
 @media (max-width: 1480px) {
-  .hero { min-height: 820px; }
-  .portrait { width: min(1040px, 72vw); bottom: -225px; right: -45px; }
   .speech { right: 330px; }
   .credentials p { font-size: 16px; }
   .step-art { height: 260px; }
@@ -284,8 +330,9 @@ h1 strong { font-weight: 800; }
 
 @media (max-width: 1100px) {
   .site-header nav { gap: 24px; }
-  h1 { font-size: clamp(68px, 9vw, 96px); }
-  .portrait { opacity: .62; right: -150px; }
+  h1 { font-size: clamp(68px, 8vw, 88px); }
+  .hero-composition { width: 100%; }
+  .portrait { width: min(650px, 60vw); opacity: .85; right: 0; }
   .speech { right: 250px; transform: scale(.85) rotate(-3deg); }
   .hero-copy { z-index: 4; }
 }
@@ -311,13 +358,15 @@ h1 strong { font-weight: 800; }
     padding: 7px 12px 9px;
     border-radius: 24px;
   }
-  .hero { min-height: 820px; min-height: 100svh; height: 100svh; }
-  .hero-copy { left: 22px; top: 140px; }
+  .hero { min-height: max(900px, 100svh); height: auto; }
+  .hero-inner, .hero-composition { width: 100%; min-height: max(900px, 100svh); }
+  .hero-composition { display: block; }
+  .hero-copy { position: absolute; left: 22px; top: 140px; margin-top: 0; }
   h1 { max-width: calc(100vw - 44px); font-size: clamp(49px, 14vw, 76px); line-height: 1.08; }
   h1 > span { white-space: normal; }
   .credentials { margin-top: 28px; padding-right: 18px; }
   .credentials p { max-width: calc(100vw - 44px); font-size: 14px; line-height: 1.55; }
-  .portrait { width: 600px; right: -250px; bottom: -150px; opacity: .45; }
+  .portrait { position: absolute; width: min(450px, 100%); max-height: none; right: 0; bottom: 0; opacity: .85; }
   .speech { display: none; }
   .how { padding: 60px 22px; }
   .how h2 { font-size: 36px; margin-bottom: 42px; }
