@@ -97,7 +97,7 @@
   let current = 0;
   let last = 0;
   let frameId = 0;
-  let hasPlayed = false;
+  let isVisible = false;
 
   function frame(now) {
     if (last) current += Math.min(now - last, 100) * 0.001;
@@ -115,20 +115,30 @@
     frameId = requestAnimationFrame(frame);
   }
 
-  select('[data-replay]').addEventListener('click', play);
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  paint(reducedMotion ? 6 : 0);
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  paint(reducedMotion.matches ? 6 : 0);
 
-  if (!reducedMotion && 'IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
-      if (!hasPlayed && entries.some(entry => entry.isIntersecting)) {
-        hasPlayed = true;
-        play();
-        observer.disconnect();
-      }
-    }, { threshold: 0.22 });
+      entries.forEach(entry => {
+        if (entry.isIntersecting === isVisible) return;
+        isVisible = entry.isIntersecting;
+        if (isVisible && !reducedMotion.matches) play();
+        else {
+          cancelAnimationFrame(frameId);
+          paint(6);
+        }
+      });
+    }, { rootMargin: '-15% 0px -15% 0px', threshold: 0 });
     observer.observe(root);
-  } else if (!reducedMotion) {
-    play();
+  } else {
+    isVisible = true;
+    if (!reducedMotion.matches) play();
   }
+
+  reducedMotion.addEventListener('change', () => {
+    cancelAnimationFrame(frameId);
+    if (reducedMotion.matches || !isVisible) paint(6);
+    else play();
+  });
 })();
