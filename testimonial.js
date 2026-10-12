@@ -76,9 +76,15 @@
     currentLabel.textContent = pad(active + 1);
   }
 
+  // The current card lines up with the page's left text edge instead of the centre
+  function leftEdge() {
+    const heading = document.querySelector('.testimonial-heading');
+    return heading ? parseFloat(getComputedStyle(heading).paddingLeft) || 24 : 24;
+  }
+
   function measure({ snap = false } = {}) {
     const card = cards[activeSlot];
-    trackTarget = viewport.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
+    trackTarget = leftEdge() - card.offsetLeft;
     if (snap || reducedMotion.matches || !initialized) {
       trackX = trackTarget;
       trackVelocity = 0;
@@ -98,7 +104,7 @@
 
     updateCurrentState();
     const card = cards[activeSlot];
-    trackTarget = viewport.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
+    trackTarget = leftEdge() - card.offsetLeft;
     trackX = trackTarget;
     trackVelocity = 0;
     states.forEach((state, index) => {
