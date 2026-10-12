@@ -121,25 +121,11 @@ body {
   align-items: center;
   min-height: 44px;
   color: inherit;
+  font-size: 15px;
+  font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
-  opacity: .82;
-  transition: opacity 160ms ease-out, transform 180ms cubic-bezier(.2, .7, .3, 1);
-}
-
-.site-header nav > span::after,
-.site-header nav > a::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 9px;
-  left: 0;
-  height: 1px;
-  background: currentColor;
-  opacity: .5;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 180ms cubic-bezier(.2, .7, .3, 1);
+  transition: color 160ms ease-out;
 }
 
 .site-header .brand:focus-visible,
@@ -153,9 +139,7 @@ body {
 @media (hover: hover) and (pointer: fine) {
   .site-header .brand:hover { opacity: .75; }
   .site-header nav > span:hover,
-  .site-header nav > a:hover { opacity: 1; transform: translateY(-1px); }
-  .site-header nav > span:hover::after,
-  .site-header nav > a:hover::after { transform: scaleX(1); }
+  .site-header nav > a:hover { color: var(--muted); }
 }
 
 
@@ -237,11 +221,7 @@ body {
   }
   .site-header .brand,
   .site-header nav > span,
-  .site-header nav > a,
-  .site-header nav > span::after,
-  .site-header nav > a::after { transition: none; }
-  .site-header nav > span:hover,
-  .site-header nav > a:hover { transform: none; }
+  .site-header nav > a { transition: none; }
 }
 
 @media (max-width: 900px) {
