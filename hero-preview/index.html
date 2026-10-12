@@ -115,6 +115,12 @@
       if (reduce) { vid.removeAttribute('autoplay'); vid.pause(); night.classList.add('static'); return; }
       fx.classList.add('play'); night.classList.add('play');
 
+      // Some browsers skip the autoplay attribute; start it explicitly once it can play
+      function kick() { if (vid.paused) { var p = vid.play(); if (p && p.catch) p.catch(function () {}); } }
+      vid.addEventListener('canplay', kick);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
+      kick();
+
       // Occasional meteor, passing behind her toward the left horizon
       var met = document.getElementById('met');
       function shoot() {
