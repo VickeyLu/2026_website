@@ -77,7 +77,7 @@
 .site-header[data-on-dark]:not([data-scrolled]) .brand-mark { filter: invert(1); }
 
 @media (max-width: 760px) and (orientation: portrait) {
-  .space-copy { top: max(132px, 17svh); transform: none; max-width: 80vw; }
+  .space-copy { top: max(156px, 21svh); transform: none; max-width: 80vw; }
   .space-title { font-size: clamp(32px, 8.8vw, 40px); }
   .space-title > span { white-space: normal; }
   .space-kicker { font-size: 13px; margin-bottom: 1.1em; }
