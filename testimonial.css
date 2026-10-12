@@ -227,7 +227,7 @@
   border-radius: 50%;
   color: var(--ink);
   background: transparent;
-  font: 400 20px/1 Inter, Arial, sans-serif;
+  font-weight: 400; font-size: 20px; line-height: 1; font-family: inherit;
   cursor: pointer;
   transition: opacity 160ms ease-out, transform 180ms cubic-bezier(.2, .7, .3, 1);
 }

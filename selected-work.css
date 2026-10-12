@@ -137,8 +137,8 @@
   width: 28px;
   height: 28px;
   overflow: visible;
-  fill: var(--highlight);
-  stroke: var(--ink);
+  fill: var(--ink);
+  stroke: var(--paper);
   stroke-width: 1.8;
   stroke-linejoin: round;
   transform: rotate(-13deg);
@@ -153,10 +153,10 @@
   width: max-content;
   min-height: 46px;
   padding: 11px 17px;
-  border: 2px solid var(--ink);
-  border-radius: 18px;
-  background: var(--highlight);
-  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
   font-size: 15px;
   font-weight: 500;
   line-height: 20px;

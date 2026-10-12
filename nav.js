@@ -1,6 +1,6 @@
 (() => {
   const header = document.querySelector('[data-nav]');
-  const hero = document.querySelector('.hero');
+  const hero = document.querySelector('[data-hero]');
   if (!header || !hero) return;
 
   let ticking = false;

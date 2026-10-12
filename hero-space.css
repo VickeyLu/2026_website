@@ -1,0 +1,86 @@
+/* Space hero: pinned cinematic opening. The rest of the page (.after-hero) slides up over it with a straight edge (B4). */
+.space-hero {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--space);
+  color: var(--on-space);
+}
+
+.space-stage { position: absolute; inset: 0; }
+.space-scene { position: absolute; inset: 0; transform-origin: 72% 46%; will-change: transform, filter; }
+.space-wrap { position: absolute; left: 0; top: 0; }
+.space-wrap video,
+.space-wrap svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.space-wrap video { object-fit: cover; }
+.space-wrap svg { pointer-events: none; }
+
+.space-fx .rim { fill: none; stroke: url(#space-dawn); opacity: 0; }
+.space-fx.play .rim { animation: space-halo 4s .3s ease-in-out forwards; }
+@keyframes space-halo { 0% { opacity: 0 } 45% { opacity: .22 } 100% { opacity: 0 } }
+
+.space-night {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  background: radial-gradient(ellipse 75% 95% at 4% 70%, rgba(3, 5, 10, .2), rgba(3, 5, 10, .72) 72%);
+}
+.space-night.play { animation: space-dawn 3.5s .15s cubic-bezier(.35, 0, .2, 1) forwards; }
+.space-night.static { opacity: 0; }
+@keyframes space-dawn { to { opacity: 0 } }
+
+.space-copy {
+  position: absolute;
+  left: clamp(24px, 6vw, 112px);
+  top: 50%;
+  max-width: 46vw;
+  transform: translateY(-58%);
+  will-change: transform, opacity;
+}
+.space-kicker { margin: 0 0 1.4em; font-size: clamp(13px, 1.05vw, 16px); color: var(--on-space-muted); }
+.space-title {
+  margin: 0;
+  font-size: clamp(40px, 4.8vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  font-weight: 400;
+  text-wrap: balance;
+}
+.space-title > span { display: block; white-space: nowrap; }
+.space-cred { margin: 1.6em 0 0; font-size: clamp(13px, 1vw, 15px); line-height: 1.7; color: var(--on-space-muted); }
+
+/* the page that rises over the hero */
+.after-hero { position: relative; z-index: 1; background: var(--paper); }
+.after-hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 2px;
+  opacity: var(--rim, 0);
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(200, 220, 255, 0) 0%, rgba(214, 230, 255, .95) 30%, #fff 50%, rgba(214, 230, 255, .95) 70%, rgba(200, 220, 255, 0) 100%);
+  box-shadow: 0 0 18px 4px rgba(190, 215, 255, .55);
+}
+
+/* nav reads white while it sits on the space scene */
+.site-header[data-on-dark]:not([data-scrolled]) .nav-shell { color: var(--on-space); }
+.site-header[data-on-dark]:not([data-scrolled]) .brand-mark { filter: invert(1); }
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .space-copy { top: max(132px, 17svh); transform: none; max-width: 80vw; }
+  .space-title { font-size: clamp(32px, 8.8vw, 40px); }
+  .space-title > span { white-space: normal; }
+  .space-kicker { font-size: 13px; margin-bottom: 1.1em; }
+  .space-cred { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .space-night { opacity: 0; animation: none; }
+  .space-fx .rim { animation: none; }
+}
