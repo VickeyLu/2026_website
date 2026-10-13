@@ -7,6 +7,7 @@
   const controls = section.querySelector('[data-quote-controls]');
   const current = section.querySelector('[data-quote-current]');
   const total = section.querySelector('[data-quote-total]');
+  const facet = section.querySelector('[data-quote-facet]');
   const pad = n => String(n).padStart(2, '0');
 
   if (quotes.length < 2) {
@@ -25,6 +26,7 @@
       q.toggleAttribute('aria-hidden', !on);
     });
     current.textContent = pad(index + 1);
+    if (facet && quotes[index].dataset.facet) facet.textContent = '· ' + quotes[index].dataset.facet;
   }
 
   section.querySelector('[data-quote-prev]').addEventListener('click', () => show(index - 1));

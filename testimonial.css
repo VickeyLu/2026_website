@@ -11,6 +11,7 @@
 }
 
 .quotes { display: grid; }
+.quote-facet { color: var(--ink); }
 
 .quote {
   grid-area: 1 / 1;
