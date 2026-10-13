@@ -107,6 +107,7 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 ## 6. Motion
 
 - **Hero opening (once):** dark → dawn over ~3.5s, faint horizon halo; seamless swing loop video (figure at 74% across on desktop, 66% on mobile); a small meteor passes behind her every 12–20s.
+- **Hero UI entrance:** logo at 0ms, nav at 100ms, then the three title lines at 300/380/460ms. Nav uses 700ms; title lines use 800ms with an 18px rise. All use `cubic-bezier(.16, 1, .3, 1)`. Reduced motion shows the finished state immediately.
 - **Hero → page (B4):** the hero stays pinned while a straight-edged paper section slides up over it. The scene scales to ~0.95 and dims ~50%; a faint blue-white light line rides the section's top edge and fades out. About one screen of scroll.
 - **Everywhere else:** crossfades ~400–450ms; line-by-line reveals 600ms with 80ms stagger. One easing family.
 - **Never:** autoplaying carousels, bouncing, swinging/physics UI, parallax on text.
