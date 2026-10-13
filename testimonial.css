@@ -1,51 +1,67 @@
-/* Kind words: one quote per screen. Quotes share one grid cell so switching never shifts the layout. */
+/* Kind words: three quotes per screen, one per hero line (See systems / Understand people / Ship clarity).
+   Sets share one grid cell so paging never shifts the layout. */
 .testimonials {
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: clamp(28px, 4vh, 48px);
+  gap: clamp(24px, 3.5vh, 40px);
   padding-block: var(--section-space);
   padding-inline: var(--gutter);
 }
 
-.quotes { display: grid; }
-.quote-facet { color: var(--ink); }
-/* the words a hiring manager should catch on a scan */
-.quote blockquote strong { font-weight: 400; color: var(--ink); }
+.quote-sets { display: grid; }
 
-.quote {
+.quote-set {
   grid-area: 1 / 1;
-  margin: 0;
   display: grid;
-  align-content: start;
-  gap: clamp(24px, 3.2vh, 40px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(32px, 4vw, 72px);
+  align-items: start;
   opacity: 0;
   visibility: hidden;
   transition: opacity .45s ease, visibility 0s linear .45s;
 }
-.quote.is-current {
+.quote-set.is-current {
   opacity: 1;
   visibility: visible;
   transition: opacity .45s ease .12s, visibility 0s;
 }
 
-.quote blockquote {
+.quote {
   margin: 0;
-  max-width: 30ch;
-  font-size: clamp(28px, 3.2vw, 48px);
-  font-weight: 400;
-  line-height: 1.16;
-  letter-spacing: -.018em;
-  color: var(--muted);
-  text-wrap: pretty;
-  text-indent: -.42em; /* hang the opening quote mark so the text edge stays on the grid */
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
 }
 
-.quote figcaption { display: grid; gap: 4px; }
-.quote-name { font-size: 16px; font-weight: 500; color: var(--ink); }
-.quote-role { font-size: 15px; color: var(--muted); }
+.quote-facet {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.quote blockquote {
+  margin: 0;
+  font-size: clamp(20px, 1.6vw, 26px);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+/* the words a hiring manager should catch on a scan */
+.quote blockquote strong { font-weight: 400; color: var(--ink); }
+
+.quote figcaption { display: grid; gap: 2px; }
+.quote-name { font-size: 15px; font-weight: 500; color: var(--ink); }
+.quote-role { font-size: 14px; color: var(--muted); }
 
 .quote-controls {
   display: flex;
@@ -72,6 +88,10 @@
 }
 .quote-controls button:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
 
+@media (max-width: 900px) {
+  .quote-set { grid-template-columns: 1fr; gap: 40px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .quote, .quote.is-current { transition: none; }
+  .quote-set, .quote-set.is-current { transition: none; }
 }
