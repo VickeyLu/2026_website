@@ -50,7 +50,17 @@
   font-weight: 400;
   text-wrap: balance;
 }
-.space-title > span { display: block; white-space: nowrap; }
+.space-title > span {
+  display: block;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: space-title-enter 800ms var(--ease-out-expo) forwards;
+}
+.space-title > span:nth-child(1) { animation-delay: 300ms; }
+.space-title > span:nth-child(2) { animation-delay: 380ms; }
+.space-title > span:nth-child(3) { animation-delay: 460ms; }
+@keyframes space-title-enter { to { opacity: 1; transform: translateY(0); } }
 .space-cred { margin: 1.6em 0 0; font-size: clamp(13px, 1vw, 15px); line-height: 1.7; color: var(--on-space-muted); }
 
 /* the page that rises over the hero */
@@ -69,6 +79,12 @@
 }
 
 /* nav reads white while it sits on the space scene */
+.site-header .brand { animation: space-nav-enter 700ms var(--ease-out-expo) both; }
+.site-header nav { animation: space-nav-enter 700ms 100ms var(--ease-out-expo) both; }
+@keyframes space-nav-enter {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .site-header[data-on-dark]:not([data-scrolled]) .nav-shell { color: #ffffff; }
 @media (hover: hover) and (pointer: fine) {
   .site-header[data-on-dark]:not([data-scrolled]) nav > a:hover,
@@ -87,4 +103,11 @@
 @media (prefers-reduced-motion: reduce) {
   .space-night { opacity: 0; animation: none; }
   .space-fx .rim { animation: none; }
+  .space-title > span,
+  .site-header .brand,
+  .site-header nav {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
