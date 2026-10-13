@@ -71,8 +71,8 @@
 /* nav reads white while it sits on the space scene */
 .site-header[data-on-dark]:not([data-scrolled]) .nav-shell { color: #ffffff; }
 @media (hover: hover) and (pointer: fine) {
-  .site-header[data-on-dark]:not([data-scrolled]) nav a:hover,
-  .site-header[data-on-dark]:not([data-scrolled]) nav span:hover { color: rgba(255, 255, 255, .55); }
+  .site-header[data-on-dark]:not([data-scrolled]) nav > a:hover,
+  .site-header[data-on-dark]:not([data-scrolled]) nav > span:hover { color: rgba(255, 255, 255, .55); }
 }
 .site-header[data-on-dark]:not([data-scrolled]) .brand-mark { filter: invert(1); }
 
