@@ -17,10 +17,38 @@
 .space-wrap svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .space-wrap video { object-fit: cover; }
 .space-wrap svg { pointer-events: none; }
+.space-fx { z-index: 3; }
 
 .space-fx .rim { fill: none; stroke: url(#space-dawn); opacity: 0; }
 .space-fx.play .rim { animation: space-halo 4s .3s ease-in-out forwards; }
 @keyframes space-halo { 0% { opacity: 0 } 45% { opacity: .22 } 100% { opacity: 0 } }
+
+.loading-horizon {
+  fill: none;
+  stroke: url(#space-dawn);
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+.loading-horizon-glow { stroke-width: 12; }
+.loading-horizon-line { stroke-width: 1.6; }
+html.intro-loading .loading-horizon {
+  animation: loading-horizon-trace 1100ms 160ms var(--ease-out-expo) forwards;
+}
+html.intro-revealing .loading-horizon {
+  stroke-dashoffset: 0;
+  animation: loading-horizon-release 700ms ease-out forwards;
+}
+@keyframes loading-horizon-trace {
+  0% { opacity: 0; stroke-dashoffset: 1; }
+  16% { opacity: .72; }
+  100% { opacity: .92; stroke-dashoffset: 0; }
+}
+@keyframes loading-horizon-release {
+  from { opacity: .92; }
+  to { opacity: 0; }
+}
 
 .space-night {
   position: absolute;
@@ -31,6 +59,7 @@
 }
 .space-night.play { animation: space-dawn 3.5s .15s cubic-bezier(.35, 0, .2, 1) forwards; }
 .space-night.static { opacity: 0; }
+html.intro-complete .space-night { opacity: 0; }
 @keyframes space-dawn { to { opacity: 0 } }
 
 .space-copy {
@@ -53,13 +82,21 @@
 .space-title > span {
   display: block;
   white-space: nowrap;
+  opacity: 1;
+  transform: none;
+}
+html.intro-loading .space-title > span {
+  opacity: 0;
+  transform: translateY(18px);
+}
+html.intro-revealing .space-title > span {
   opacity: 0;
   transform: translateY(18px);
   animation: space-title-enter 800ms var(--ease-out-expo) forwards;
 }
-.space-title > span:nth-child(1) { animation-delay: 300ms; }
-.space-title > span:nth-child(2) { animation-delay: 380ms; }
-.space-title > span:nth-child(3) { animation-delay: 460ms; }
+html.intro-revealing .space-title > span:nth-child(1) { animation-delay: 300ms; }
+html.intro-revealing .space-title > span:nth-child(2) { animation-delay: 380ms; }
+html.intro-revealing .space-title > span:nth-child(3) { animation-delay: 460ms; }
 @keyframes space-title-enter { to { opacity: 1; transform: translateY(0); } }
 .space-cred { margin: 1.6em 0 0; font-size: clamp(13px, 1vw, 15px); line-height: 1.7; color: var(--on-space-muted); }
 
@@ -79,8 +116,10 @@
 }
 
 /* nav reads white while it sits on the space scene */
-.site-header .brand { animation: space-nav-enter 700ms var(--ease-out-expo) both; }
-.site-header nav { animation: space-nav-enter 700ms 100ms var(--ease-out-expo) both; }
+html.intro-loading .site-header .brand,
+html.intro-loading .site-header nav { opacity: 0; transform: translateY(-10px); }
+html.intro-revealing .site-header .brand { animation: space-nav-enter 700ms var(--ease-out-expo) both; }
+html.intro-revealing .site-header nav { animation: space-nav-enter 700ms 100ms var(--ease-out-expo) both; }
 @keyframes space-nav-enter {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -102,7 +141,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .space-night { opacity: 0; animation: none; }
-  .space-fx .rim { animation: none; }
+  .space-fx .rim,
+  .loading-horizon { animation: none; opacity: 0; }
   .space-title > span,
   .site-header .brand,
   .site-header nav {

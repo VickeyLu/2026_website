@@ -12,7 +12,9 @@
   const night = hero.querySelector('[data-space-night]');
   const meteor = hero.querySelector('[data-meteor]');
   const header = document.querySelector('[data-nav]');
+  const root = document.documentElement;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const shouldIntro = root.classList.contains('intro-loading');
 
   const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
   const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
@@ -62,6 +64,45 @@
     if (q && q.catch) q.catch(() => {});
   }
 
+  function wait(ms) {
+    return new Promise(resolve => window.setTimeout(resolve, ms));
+  }
+
+  function posterReady() {
+    const src = video.getAttribute('poster');
+    if (!src) return Promise.resolve();
+    const image = new Image();
+    image.src = src;
+    if (image.decode) return image.decode();
+    return new Promise(resolve => {
+      image.addEventListener('load', resolve, { once: true });
+      image.addEventListener('error', resolve, { once: true });
+    });
+  }
+
+  let introStarted = false;
+  function startIntro() {
+    if (introStarted || !shouldIntro) return;
+    introStarted = true;
+    window.removeEventListener('keydown', skipIntro);
+    window.clearTimeout(window.__portfolioIntroFallback);
+    root.classList.remove('intro-loading', 'intro-complete');
+    root.classList.add('intro-revealing');
+    fx.classList.add('play');
+    night.classList.add('play');
+    try { sessionStorage.setItem('vickey:hero-intro-seen:v1', '1'); } catch (_) {}
+    window.setTimeout(() => {
+      root.classList.remove('intro-revealing');
+      root.classList.add('intro-complete');
+    }, 3800);
+  }
+
+  function skipIntro(event) {
+    if (event.type === 'keydown' && ![' ', 'Enter', 'Escape'].includes(event.key)) return;
+    if (event.type === 'keydown' && event.key === ' ') event.preventDefault();
+    startIntro();
+  }
+
   // Occasional meteor, passing behind her toward the left horizon
   function shoot() {
     if (covered || document.hidden) return;
@@ -86,13 +127,24 @@
   onScroll();
 
   if (reduce) {
+    window.clearTimeout(window.__portfolioIntroFallback);
     video.removeAttribute('autoplay');
     video.pause();
     night.classList.add('static');
     return;
   }
-  fx.classList.add('play');
-  night.classList.add('play');
+
+  if (shouldIntro) {
+    window.addEventListener('pointerdown', skipIntro, { once: true, passive: true });
+    window.addEventListener('keydown', skipIntro);
+    const fontReady = document.fonts ? document.fonts.ready : Promise.resolve();
+    const criticalReady = Promise.allSettled([fontReady, posterReady()]);
+    Promise.all([wait(650), Promise.race([criticalReady, wait(1500)])]).then(startIntro);
+  } else {
+    window.clearTimeout(window.__portfolioIntroFallback);
+    night.classList.add('static');
+  }
+
   video.addEventListener('canplay', play);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) play(); });
   play();

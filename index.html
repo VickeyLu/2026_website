@@ -7,6 +7,26 @@
   <meta property="og:image" content="assets/hero/og.jpg">
   <meta name="description" content="Vickey Lu — product designer for enterprise SaaS and AI products.">
   <title>Vickey Lu — Product Designer</title>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      root.classList.add('has-js');
+
+      let showIntro = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      try {
+        const replay = new URLSearchParams(window.location.search).has('replay-intro');
+        showIntro = showIntro && (replay || sessionStorage.getItem('vickey:hero-intro-seen:v1') !== '1');
+      } catch (_) {}
+
+      root.classList.add(showIntro ? 'intro-loading' : 'intro-complete');
+      if (showIntro) {
+        window.__portfolioIntroFallback = window.setTimeout(() => {
+          root.classList.remove('intro-loading', 'intro-revealing');
+          root.classList.add('intro-complete');
+        }, 2400);
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..700&display=swap">
@@ -14,7 +34,7 @@
   <link rel="stylesheet" href="styles.css?v=new-site-6">
   <link rel="stylesheet" href="selected-work.css?v=new-site-2">
   <link rel="stylesheet" href="testimonial.css?v=sets-2">
-  <link rel="stylesheet" href="hero-space.css?v=4">
+  <link rel="stylesheet" href="hero-space.css?v=5">
 </head>
 <body>
   <header class="site-header" data-nav>
@@ -49,6 +69,8 @@
               <g transform="translate(125 150)">
                 <path class="rim" d="M-125 408 C200 398,450 403,600 420 S900 462,1100 501 L1550 598" stroke-width="10" filter="url(#space-b6)"/>
                 <path class="rim" d="M-125 408 C200 398,450 403,600 420 S900 462,1100 501 L1550 598" stroke-width="30" filter="url(#space-b2)"/>
+                <path class="loading-horizon loading-horizon-glow" pathLength="1" d="M-125 408 C200 398,450 403,600 420 S900 462,1100 501 L1550 598" filter="url(#space-b6)"/>
+                <path class="loading-horizon loading-horizon-line" pathLength="1" d="M-125 408 C200 398,450 403,600 420 S900 462,1100 501 L1550 598"/>
               </g>
             </svg>
             <svg viewBox="0 0 1672 941" preserveAspectRatio="none">
@@ -291,6 +313,6 @@
   <script src="script.js?v=scroll-replay-2"></script>
   <script src="selected-work.js?v=project-01-copy-1" defer></script>
   <script src="testimonial.js?v=sets-2" defer></script>
-  <script src="hero-space.js?v=1" defer></script>
+  <script src="hero-space.js?v=3" defer></script>
 </body>
 </html>
