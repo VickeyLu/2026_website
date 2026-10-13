@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vickey Lu — Navigation Mark Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..600&display=swap">
+  <style>
+    :root {
+      --paper: #f5f4f0;
+      --ink: #121212;
+      --muted: #7a7873;
+      --line: #dcdad4;
+      --gutter: clamp(24px, 6vw, 112px);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Google Sans Flex", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      padding: 72px var(--gutter) 56px;
+      display: grid;
+      grid-template-columns: 1fr minmax(280px, 38ch);
+      gap: 48px;
+      align-items: end;
+    }
+    .eyebrow, .option-number {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 12ch;
+      margin: 0;
+      font-size: clamp(48px, 6vw, 88px);
+      line-height: .98;
+      letter-spacing: -.035em;
+      font-weight: 400;
+    }
+    .intro {
+      margin: 0;
+      color: #3d3d3a;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+    .dark-preview {
+      min-height: 260px;
+      padding: 48px var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      gap: 0;
+      color: white;
+      background:
+        linear-gradient(rgba(3, 5, 10, .48), rgba(3, 5, 10, .72)),
+        url("assets/hero/poster.webp") center 42% / cover;
+    }
+    .nav-sample {
+      min-height: 88px;
+      padding: 0 clamp(14px, 2.2vw, 32px);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 1px solid rgba(255,255,255,.2);
+    }
+    .nav-sample:first-child { border-left: 0; padding-left: 0; }
+    .nav-sample img { width: 26px; height: 26px; filter: invert(1); flex: 0 0 26px; }
+    .nav-sample span { font-size: 17px; font-weight: 500; letter-spacing: -.025em; white-space: nowrap; }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: 0 var(--gutter) 120px;
+    }
+    .option {
+      min-height: 420px;
+      padding: 64px 0;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: minmax(132px, .7fr) 1fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: center;
+    }
+    .option:nth-child(odd) { padding-right: clamp(32px, 5vw, 80px); }
+    .option:nth-child(even) { padding-left: clamp(32px, 5vw, 80px); border-left: 1px solid var(--line); }
+    .mark-stage {
+      display: grid;
+      justify-items: start;
+      gap: 28px;
+    }
+    .mark-large { width: 112px; height: 112px; }
+    .size-check {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .size-check img { width: 26px; height: 26px; }
+    .option-copy h2 {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 2.6vw, 42px);
+      line-height: 1.04;
+      letter-spacing: -.025em;
+      font-weight: 400;
+    }
+    .option-copy p:last-child {
+      max-width: 31ch;
+      margin: 0;
+      color: #3d3d3a;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .recommended { color: var(--ink); }
+    @media (max-width: 900px) {
+      header { grid-template-columns: 1fr; }
+      .dark-preview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav-sample:nth-child(3) { border-left: 0; padding-left: 0; }
+      .options { grid-template-columns: 1fr; }
+      .option:nth-child(n) { padding-inline: 0; border-left: 0; }
+    }
+    @media (max-width: 560px) {
+      header { padding-top: 48px; }
+      .dark-preview { grid-template-columns: 1fr; padding-block: 24px; }
+      .nav-sample:nth-child(n) { border-left: 0; border-top: 1px solid rgba(255,255,255,.2); padding-left: 0; }
+      .nav-sample:first-child { border-top: 0; }
+      .option { grid-template-columns: 104px 1fr; min-height: 320px; gap: 24px; }
+      .mark-large { width: 88px; height: 88px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Navigation mark study</p>
+      <h1>Four quieter ways to say Vickey Lu.</h1>
+    </div>
+    <p class="intro">The current mark is dense and enclosed. These directions use fewer parts, more negative space and softer geometry so the icon feels at home beside the new portfolio’s typography.</p>
+  </header>
+
+  <section class="dark-preview" aria-label="Four logo options shown at navigation size on the space hero">
+    <div class="nav-sample"><img src="assets/logo-concepts/01-open-v.svg" alt=""><span>Vickey Lu</span></div>
+    <div class="nav-sample"><img src="assets/logo-concepts/02-continuous-vl.svg" alt=""><span>Vickey Lu</span></div>
+    <div class="nav-sample"><img src="assets/logo-concepts/03-folded-v.svg" alt=""><span>Vickey Lu</span></div>
+    <div class="nav-sample"><img src="assets/logo-concepts/04-light-roundel.svg" alt=""><span>Vickey Lu</span></div>
+  </section>
+
+  <main class="options">
+    <article class="option">
+      <div class="mark-stage">
+        <img class="mark-large" src="assets/logo-concepts/01-open-v.svg" alt="Open V logo concept">
+        <div class="size-check"><img src="assets/logo-concepts/01-open-v.svg" alt=""><span>26 px</span></div>
+      </div>
+      <div class="option-copy">
+        <p class="option-number recommended">01 · Recommended</p>
+        <h2>Open V</h2>
+        <p>The cleanest departure. It removes the badge completely and turns the old layered V into two calm strokes with one small fold.</p>
+      </div>
+    </article>
+
+    <article class="option">
+      <div class="mark-stage">
+        <img class="mark-large" src="assets/logo-concepts/02-continuous-vl.svg" alt="Continuous VL logo concept">
+        <div class="size-check"><img src="assets/logo-concepts/02-continuous-vl.svg" alt=""><span>26 px</span></div>
+      </div>
+      <div class="option-copy">
+        <p class="option-number">02</p>
+        <h2>Continuous VL</h2>
+        <p>A single line moves through L into V. It feels personal rather than corporate, and its open construction matches the portfolio’s generous spacing.</p>
+      </div>
+    </article>
+
+    <article class="option">
+      <div class="mark-stage">
+        <img class="mark-large" src="assets/logo-concepts/03-folded-v.svg" alt="Folded V logo concept">
+        <div class="size-check"><img src="assets/logo-concepts/03-folded-v.svg" alt=""><span>26 px</span></div>
+      </div>
+      <div class="option-copy">
+        <p class="option-number">03</p>
+        <h2>Folded V</h2>
+        <p>The closest evolution of the existing symbol. It preserves the sharp folded idea but reduces three competing layers to one decisive cut.</p>
+      </div>
+    </article>
+
+    <article class="option">
+      <div class="mark-stage">
+        <img class="mark-large" src="assets/logo-concepts/04-light-roundel.svg" alt="Light roundel logo concept">
+        <div class="size-check"><img src="assets/logo-concepts/04-light-roundel.svg" alt=""><span>26 px</span></div>
+      </div>
+      <div class="option-copy">
+        <p class="option-number">04</p>
+        <h2>Light Roundel</h2>
+        <p>The smallest change. It keeps the familiar circle, but trades the heavy disc and stacked geometry for an outlined container and one open V.</p>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

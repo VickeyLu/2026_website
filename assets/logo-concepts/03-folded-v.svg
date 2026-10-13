@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
+  <defs>
+    <mask id="fold-cut">
+      <rect width="26" height="26" fill="white"/>
+      <path d="M7.7 4h4.8l2.8 4.9-2.7 4.8Z" fill="black"/>
+    </mask>
+  </defs>
+  <path d="M2 4h5.8l5.2 9.8L18.2 4H24L13 23.5Z" fill="#121212" mask="url(#fold-cut)"/>
+</svg>
