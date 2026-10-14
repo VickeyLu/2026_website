@@ -20,10 +20,13 @@
   letter-spacing: -.02em;
   text-wrap: balance;
 }
-/* three lines that roll up one at a time as you scroll, like a wheel turning to the next line */
+/* one slot, one line at a time: Designer by work → Builder by instinct → Curious human everywhere else → again.
+   Without JS (or with reduced motion) the three lines simply stack. */
 .about h2 { perspective: 900px; }
 .about h2 .roll { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
-.about h2 .roll > span { display: block; transform-origin: 50% 0; will-change: transform; }
+.about h2 .roll > span { display: block; transform-origin: 50% 50%; will-change: transform; }
+.about h2.is-rolling { display: grid; }
+.about h2.is-rolling .roll { grid-area: 1 / 1; align-self: start; }
 .about h2 .roll.is-muted { color: var(--muted); }
 .about-photo { width: 100%; aspect-ratio: 4 / 5; max-height: 560px; }
 
