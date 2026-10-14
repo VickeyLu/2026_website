@@ -138,6 +138,12 @@
     const cw = MATTE.bw * vs, ch = MATTE.bh * vs, dpr = Math.min(2, devicePixelRatio || 1);
     Object.assign(fig.style, { left: `${ox + MATTE.bx * vs}px`, top: `${oy + MATTE.by * vs}px`, width: `${cw}px`, height: `${ch}px` });
     fig.width = Math.round(Math.min(MATTE.bw, cw * dpr)); fig.height = Math.round(Math.min(MATTE.bh, ch * dpr));
+    // desktop: the three lines sit a little above center, but always clear of the horizon and its stops
+    if (!mobile) {
+      const h = copy.offsetHeight, gx = copy.offsetLeft;
+      const hzY = top + hz.getPointAtLength(lenAtX((gx - left) * IW / ww)).y * wh / IH;
+      copy.style.top = `${Math.max(88, Math.min(vh / 2 - .58 * h, hzY - 56 - h))}px`;
+    } else copy.style.top = '';
     render(state);
   }
 
@@ -151,7 +157,7 @@
     hz.style.opacity = morphHide ? 0 : st.lineOp; hzg.style.opacity = morphHide ? 0 : .8 * st.lineOp;
     stops.forEach((s, i) => { const o = st.dots[i] * dotFade; s.c.style.opacity = o; s.g.style.opacity = o; });
     copy.style.opacity = st.title * (1 - copyFade);
-    copy.style.transform = `${mobile ? '' : 'translateY(-58%) '}translateY(${(1 - st.title) * 18 - 40 * copyFade}px)`;
+    copy.style.transform = `translateY(${(1 - st.title) * 18 - 40 * copyFade}px)`;
     journey.style.opacity = st.journey;
     if (place.textContent !== st.place) place.textContent = st.place;
     place.style.opacity = st.placeOp;

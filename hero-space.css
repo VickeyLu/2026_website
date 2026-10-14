@@ -48,7 +48,7 @@
   left: var(--gutter, clamp(24px, 6vw, 112px));
   top: 50%;
   max-width: 46vw;
-  transform: translateY(-58%);
+  transform: translateY(-58%); /* JS replaces this with a measured top, clear of the horizon */
   will-change: transform, opacity;
 }
 .space-title {
