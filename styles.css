@@ -102,12 +102,29 @@ body {
 }
 
 .site-header .brand-mark {
+  position: relative;
   width: 26px;
   height: 26px;
   flex: 0 0 26px;
   display: block;
-  object-fit: contain;
 }
+
+.site-header .brand-mark img {
+  position: absolute;
+  inset: 0;
+  width: 26px;
+  height: 26px;
+  display: block;
+  object-fit: contain;
+  transition: opacity 160ms ease-out;
+}
+
+.site-header .brand-mark-space { opacity: 1; }
+.site-header .brand-mark-paper { opacity: 0; }
+.site-header[data-scrolled] .brand-mark-space,
+.site-header:not([data-on-dark]) .brand-mark-space { opacity: 0; }
+.site-header[data-scrolled] .brand-mark-paper,
+.site-header:not([data-on-dark]) .brand-mark-paper { opacity: 1; }
 
 .site-header nav {
   display: flex;
@@ -258,6 +275,7 @@ body {
     transition: none;
   }
   .site-header .brand,
+  .site-header .brand-mark img,
   .site-header nav > span,
   .site-header nav > a { transition: none; }
 }

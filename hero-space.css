@@ -129,8 +129,6 @@ html.intro-revealing .site-header nav { animation: space-nav-enter 700ms 100ms v
   .site-header[data-on-dark]:not([data-scrolled]) nav > a:hover,
   .site-header[data-on-dark]:not([data-scrolled]) nav > span:hover { color: rgba(255, 255, 255, .55); }
 }
-.site-header[data-on-dark]:not([data-scrolled]) .brand-mark { filter: invert(1); }
-
 @media (max-width: 760px) and (orientation: portrait) {
   .space-copy { top: max(156px, 21svh); transform: none; max-width: 80vw; }
   .space-title { font-size: clamp(32px, 8.8vw, 40px); }

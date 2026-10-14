@@ -84,8 +84,9 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 
 **Nav**
 - Fixed, full width, padded to `--gutter`. Logo left, links right (Work, About, Playground, Resume).
-- Over the hero: pure white text, 15px / 500; hover → `rgba(255,255,255,.55)`; logo inverted. No underline.
+- Over the hero: pure white text, 15px / 500; hover → `rgba(255,255,255,.55)`; direct white-circle / black-V logo asset. No underline.
 - After scrolling: light pill (`rgba(245,244,240,.86)`, hairline border), ink text, hover → muted.
+- Logo uses two direct assets instead of a CSS filter: `vickey-logo-white.png` on dark and `vickey-logo.png` on paper.
 
 **Eyebrow** — 12px / 500 / +0.08em uppercase, muted. Sits above a section's main line.
 
