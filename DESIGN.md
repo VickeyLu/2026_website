@@ -8,6 +8,7 @@ Values below are the ones in the code (`styles.css`, `hero-space.css`, `selected
 ## 1. Principles
 
 1. **Black and white, plus one cinematic moment.** The UI is ink on paper. Color only comes from the space hero and from real work screenshots. Nothing else gets an accent color.
+   - **The motif is the horizon line: her path, left to right.** It draws in the opening, carries the career stops, and straightens into the edge of the page when you scroll.
 2. **One idea per screen.** Each section fills roughly one viewport and says one thing.
 3. **Everything left-aligned to one edge.** Text, labels, controls and the nav all start on the same gutter line. No centered text blocks.
 4. **Generous whitespace.** When in doubt, add space instead of a divider, card or box.
@@ -42,9 +43,12 @@ Rules
 
 One family for everything: **Google Sans Flex** (Google Fonts, variable; loaded as `wght@300..700`). Fallback: `"Helvetica Neue", Arial, sans-serif`. No serif, no second display face. No true italic exists; avoid italics.
 
+One exception, on the hero only: **Google Sans Code** 500 for the small instrument text (stops, places, corner text). 11–13px, uppercase, +0.1–0.12em. Never used elsewhere.
+
 | Role | Size | Weight | Tracking | Where |
 |---|---|---|---|---|
-| Hero title | `clamp(40px, 4.8vw, 80px)` | 400 | −0.02em | Hero three lines |
+| Hero title | `clamp(56px, 6.25vw, 80px)`, line-height 1.2 | 400 | −0.02em | Hero three lines (phone: `clamp(32px, 8.8vw, 40px)`) |
+| Hero instrument text | 11px (places 13px) | 500 Google Sans Code | +0.1–0.12em, UPPERCASE | Stops, opening sentence, places, corners |
 | Display | `clamp(44px, 5.6vw, 80px)` | 400 | −0.02em | "Hi, I'm Vickey." |
 | Section heading (H2) | `clamp(36px, 4vw, 56px)` | 400 | −0.018em | How I work, Selected work |
 | Lede | `clamp(20px, 1.7vw, 26px)` | 400 | — | About summary (ink-2, max 34ch) |
@@ -100,14 +104,30 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 - Quote text is muted; only hiring-signal phrases are ink, same weight.
 - Sets of three, paged with text controls. Stacks to one column under 900px.
 
+**Hero layers** (bottom to top, all in one scene box so they scale together): video → night (black, opening only) → horizon line + stop dots → her lower body (cut from each video frame with `assets/hero/matte.webp`, so she sits in front of the line) → stop labels. Above the scene: vignette, grain, title, opening text, corner text.
+- **Stops** (desktop only; phones leave them out): `TRAINED IN / ARCHITECTURE`, `6+ YEARS IN / PRODUCT DESIGN`, `GOOGLE LABS / NOTEBOOKLM`. Always two lines, centered under a small tick. Nothing is drawn under her feet.
+- **Corner text** (bottom-left / bottom-right, on the gutter): `37.3861° N · 122.0839° W / NOW · BAY AREA · CALIFORNIA` and `SCROLL / 01 / 05`.
+- **Small text on the bright Earth:** pure white plus a halo that hugs each letter (`drop-shadow` 1px + 4px, `text-shadow` 1/4/10px in `#05070B`). Never a box or a dimmed band — the Earth stays untouched.
+- **Title placement:** a little above center, but always at least 56px clear of the horizon (JS measures it).
+
 **Text controls** — `01 / 02 · Prev · Next`. Counter tabular, current number ink, rest muted. Buttons are plain text 15/500 ink, hover muted. No arrows-in-circles, no dots.
 
 ---
 
 ## 6. Motion
 
-- **Hero opening (once):** dark → dawn over ~3.5s, faint horizon halo; seamless swing loop video (figure at 74% across on desktop, 66% on mobile); a small meteor passes behind her every 12–20s.
-- **Hero → page (B4):** the hero stays pinned while a straight-edged paper section slides up over it. The scene scales to ~0.95 and dims ~50%; a faint blue-white light line rides the section's top edge and fades out. About one screen of scroll.
+- **Hero opening (once per browser session; any input skips it; `?intro` replays it), 4.8s:**
+  | Time | What happens |
+  |---|---|
+  | 0–0.7s | Black. The sentence fades in at the bottom center: `FROM DESIGNING SPACES PEOPLE LIVE IN / TO SYSTEMS PEOPLE WORK IN` |
+  | 0.5–3.05s | The horizon draws left to right. The place under the sentence cross-fades: `ZHENGZHOU, CHINA` (0.5s) → `SHANGHAI, CHINA` (1.1s) → `ST. LOUIS, MO` (1.7s) → `BAY AREA, CA` (2.3s). No years. |
+  | 1.9 / 2.5 / 2.85s | The three stops light up as the line reaches them. |
+  | 3.05s | The line reaches her feet; the sentence and place fade out. |
+  | 2.9–4.0s | Dawn (night fades). |
+  | 3.6–4.5s | The title rises in (18px). |
+  | 4.0–4.8s | Corner text arrives last. |
+- Always running: seamless swing loop video (figure at 74% across on desktop, 66% on phones); a small meteor passes behind her every 12–20s.
+- **Hero → page:** the hero stays pinned while the paper page slides up over it. The scene scales to ~0.95 and dims ~50%; stops and corners fade in the first 18%; the curved horizon straightens into the page's top edge and fades out by ~95%. Her body stays in front of the line throughout. About one screen of scroll.
 - **Everywhere else:** crossfades ~400–450ms; line-by-line reveals 600ms with 80ms stagger. One easing family.
 - **Never:** autoplaying carousels, bouncing, swinging/physics UI, parallax on text.
 - Everything respects `prefers-reduced-motion` (video paused, no fades).
@@ -116,7 +136,8 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 
 ## 7. Content rules
 
-- **Hero:** only the three lines — See systems / Understand people / Ship clarity. Name and credentials go on the next screen.
+- **Hero:** the three lines — See systems / Understand people / Ship clarity — plus the three stops and the corner text. Name and the full story go on the next screen.
+- **No years anywhere on the hero.** Places tell the journey; the only number is "6+ years in product design".
 - **Kind words:** real LinkedIn recommendations only, never reworded. Keep the key words, trim with "…", merge two points from one person when it helps. No avatars, no company names, no years. Lukewarm recommendations are left out.
 - **Copy voice:** plain, specific, first person. Numbers over adjectives.
 - **Cases:** the full story lives in Figma decks (for interviews); the website shows a short version.
@@ -125,8 +146,8 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 
 ## 8. Page flow
 
-1. Loading (to be designed; proposal: the hero opening itself, 3–4s, skippable, once per visit)
-2. Hero (pinned) → B4 transition
+1. Opening (the hero itself, 4.8s, once per session, skippable)
+2. Hero (pinned) → the horizon straightens into the page edge
 3. About — "Hi, I'm Vickey." + summary + four facts
 4. How I work — three steps
 5. Selected work — four projects
@@ -140,8 +161,8 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 | File | What it owns |
 |---|---|
 | `styles.css` | Tokens, base type, nav, About, How I work |
-| `hero-space.css` / `hero-space.js` | Hero scene framing, dawn, meteor, B4 transition, nav-on-dark |
+| `hero-space.css` / `hero-space.js` | Hero framing, opening timeline, horizon + stops, figure layer, corner text, meteor, scroll transition, nav-on-dark |
 | `selected-work.css` / `selected-work.js` | Project rows, media, hover label |
 | `testimonial.css` / `testimonial.js` | Kind words quote sets and paging |
 | `nav.js` | Scrolled state of the nav |
-| `assets/hero/` | `swing-loop.mp4`, `poster.webp`, `occ.png` (meteor occlusion mask), `og.jpg` |
+| `assets/hero/` | `swing-loop.mp4`, `poster.webp`, `matte.webp` (her lower body per video frame, 16×10 sprite), `occ.png` (meteor occlusion mask), `og.jpg` |
