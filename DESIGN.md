@@ -203,7 +203,7 @@ The temperature rises down the page: cinematic at the top, the person at the end
 | Item | Waiting on |
 |---|---|
 | About photo (grey placeholder now) | Vickey's photo |
-| Playground images + links (grey placeholders, not clickable) | three images; links can point to the old site's project pages for now |
+| Playground images: Architecture uses the old site's Webflow image (hotlinked); Urban design and Marketing are grey placeholders. All three link to the old site's project pages. | two images; then copy all three into `assets/` so nothing depends on the old site |
 | "Email me" link (`mailto:` is empty, marked `data-todo`) | Vickey's email address |
 | One metric per project card | Broadcast Suppression number from Vickey (others: Sense NPS +31%; Moka feedback 2–4 weeks → under 1 week; NotebookLM 0→1 across 3 surfaces) |
 | Mobile pass (phone nav wraps to two rows) | — |
