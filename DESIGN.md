@@ -102,7 +102,7 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 **Quote set (Kind words)**
 - Three columns, one per hero line. Each column: hairline on top, facet label (12px ink uppercase), quote, name (15/500 ink) + role (14, muted).
 - Quote text is muted; only hiring-signal phrases are ink, same weight.
-- Sets of three, paged with text controls. Stacks to one column under 900px.
+- Sets of three, paged with text controls; advances every 10s while on screen. Stacks to one column under 900px.
 
 **Hero layers** (bottom to top, all in one scene box so they scale together): video → night (black, opening only) → horizon line + stop dots → her lower body (cut from each video frame with `assets/hero/matte.webp`, so she sits in front of the line) → stop labels. Above the scene: vignette, grain, title, opening text, corner text.
 - **Stops** (desktop only; phones leave them out): `TRAINED IN / ARCHITECTURE`, `6+ YEARS IN / PRODUCT DESIGN`, `GOOGLE LABS / NOTEBOOKLM`. Always two lines, centered under a small tick. Nothing is drawn under her feet.
@@ -110,7 +110,7 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 - **Small text on the bright Earth:** pure white plus a halo that hugs each letter (`drop-shadow` 1px + 4px, `text-shadow` 1/4/10px in `#05070B`). Never a box or a dimmed band — the Earth stays untouched.
 - **Title placement:** a little above center, but always at least 56px clear of the horizon (JS measures it).
 
-**Text controls** — `01 / 02 · Prev · Next`. Counter tabular, current number ink, rest muted. Buttons are plain text 15/500 ink, hover muted. No arrows-in-circles, no dots.
+**Text controls** — `01 / 02 · Prev · Next · ——` (the last item is a 64px progress line when the set advances on its own). Counter tabular, current number ink, rest muted. Buttons are plain text 15/500 ink, hover muted. No arrows-in-circles, no dots.
 
 ---
 
@@ -129,7 +129,11 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 - Always running: seamless swing loop video (figure at 74% across on desktop, 66% on phones); a small meteor passes behind her every 12–20s.
 - **Hero → page:** the hero stays pinned while the paper page slides up over it. The scene scales to ~0.95 and dims ~50%; stops and corners fade in the first 18%; the curved horizon straightens into the page's top edge and fades out by ~95%. Her body stays in front of the line throughout. About one screen of scroll.
 - **Everywhere else:** crossfades ~400–450ms; line-by-line reveals 600ms with 80ms stagger. One easing family.
-- **Never:** autoplaying carousels, bouncing, swinging/physics UI, parallax on text.
+- **Things that move on their own (only these two, changed 2026-10-14):**
+  - About heading: one line at a time, Designer → Builder → Curious human, 2.4s each, loops while on screen.
+  - Kind words: next set every 10s while the section is on screen, with a thin progress line under the controls.
+  - Both pause on hover (and Kind words on focus or touch), stop when off screen or in a background tab, and are off under reduced motion. Manual controls always win.
+- **Never:** bouncing, swinging/physics UI, parallax on text, anything that moves without a way to pause it.
 - Everything respects `prefers-reduced-motion` (video paused, no fades).
 
 ---

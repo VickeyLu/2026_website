@@ -1,4 +1,4 @@
-/* Kind words: three quotes per screen, one per hero line (See systems / Understand people / Ship clarity).
+/* Kind words: three quotes per screen (advances every 10s while on screen; hover/focus/touch pauses), one per hero line (See systems / Understand people / Ship clarity).
    Sets share one grid cell so paging never shifts the layout. */
 .testimonials {
   min-height: 100vh;
@@ -71,6 +71,10 @@
   color: var(--muted);
 }
 .quote-controls[hidden] { display: none; }
+/* thin line that fills while a set is showing, so the change never surprises */
+.quote-progress { position: relative; width: 64px; height: 1px; background: var(--line); }
+.quote-progress[hidden] { display: none; }
+.quote-progress span { position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left center; }
 .quote-count { margin: 0; font-variant-numeric: tabular-nums; }
 .quote-count span:first-child { color: var(--ink); }
 .quote-controls button {
