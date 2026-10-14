@@ -13,7 +13,7 @@ Values below are the ones in the code (`styles.css`, `hero-space.css`, `selected
 - **Do not reword copy** (hero lines, stops, About, Kind words quotes) without asking Vickey. Copy decisions are in §7.
 - **Every animation must respect `prefers-reduced-motion`** and stop when off screen.
 - **Keep this file current.** If you change a value, a component or the page order, update the matching section here in the same commit.
-- Decision history (why things are the way they are) lives in the claude.ai project doc `design-layer-v1.md`; this file is the current state only.
+- Decision history (why things are the way they are) lives in `docs/design-decisions.md`; this file is the current state only.
 
 
 ---
