@@ -146,15 +146,18 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 
 ## 8. Page flow
 
+One long page; only case studies get their own pages. Nav: Work · About · Resume (all in-page).
+
 1. Opening (the hero itself, 4.8s, once per session, skippable)
 2. Hero (pinned) → the horizon straightens into the page edge
-3. About — "Hi, I'm Vickey." + summary + four facts
-4. How I work — three steps
-5. Selected work — four projects
-6. Kind words — two sets of three quotes
-7. Contact / footer (to be built)
+3. Selected work — the evidence
+4. How I work — the method; each step carries the hero line it serves (SEE SYSTEMS / UNDERSTAND PEOPLE / SHIP CLARITY)
+5. Kind words — others' voice, same three labels
+6. About — "Hi, I'm Vickey." / Designer by work. Builder by instinct. Curious human everywhere else. + one photo; then the chapters on a straight horizon ("Where the three lines came from"): Architecture → see systems, Marketing → understand people, SaaS → ship clarity, AI → design for uncertainty. The line draws with the scroll; each chapter lights up as it is reached.
+7. Playground — "Path is not always linear." Architecture → Urban design → Marketing, one row of three (phones: swipe).
+8. Still curious? — Email · LinkedIn · Resume, then the hero's corner text once more as a bookend.
 
----
+The temperature rises down the page: cinematic at the top, the person at the end. No life-photo gallery for now; a separate About page can come later.
 
 ## 9. Files
 
@@ -164,5 +167,6 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 | `hero-space.css` / `hero-space.js` | Hero framing, opening timeline, horizon + stops, figure layer, corner text, meteor, scroll transition, nav-on-dark |
 | `selected-work.css` / `selected-work.js` | Project rows, media, hover label |
 | `testimonial.css` / `testimonial.js` | Kind words quote sets and paging |
+| `about.css` / `about.js` | About, chapters horizon, Playground, Contact |
 | `nav.js` | Scrolled state of the nav |
 | `assets/hero/` | `swing-loop.mp4`, `poster.webp`, `matte.webp` (her lower body per video frame, 16×10 sprite), `occ.png` (meteor occlusion mask), `og.jpg` |

@@ -1,0 +1,125 @@
+/* About, Playground, Contact: the end of the page, where it turns personal.
+   The chapters sit on a straight horizon: the hero's curved line, straightened. */
+
+.is-placeholder { background: var(--soft); border-radius: 16px; }
+
+/* ---------- About ---------- */
+.about { padding-block: var(--section-space); padding-inline: var(--gutter); }
+.about-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+  gap: clamp(48px, 7vw, 120px);
+  align-items: end;
+}
+.about-hi { margin: 0 0 16px; font-size: clamp(18px, 1.4vw, 22px); color: var(--ink-2); }
+.about h2 {
+  margin: 0;
+  font-size: clamp(44px, 5.6vw, 80px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+.about h2 span { color: var(--muted); }
+.about-photo { width: 100%; aspect-ratio: 4 / 5; max-height: 560px; }
+
+/* chapters on a straight horizon */
+.chapters { margin-top: clamp(96px, 14vh, 160px); }
+.chapters-kicker { margin: 0 0 40px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.chapters-line { position: relative; height: 1px; background: var(--line); }
+.chapters-line span { position: absolute; inset: 0; background: var(--ink); transform-origin: left center; transform: scaleX(var(--p, 1)); }
+.chapters-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 48px);
+}
+.chapters-list li { position: relative; padding-top: 32px; }
+.chapter-dot {
+  position: absolute;
+  left: 0;
+  top: -5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--line);
+  transition: background .4s ease, box-shadow .4s ease;
+}
+.chapter-name { margin: 0 0 12px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); transition: color .4s ease; }
+.chapter-text { margin: 0; font-size: clamp(20px, 1.7vw, 26px); line-height: 1.3; letter-spacing: -.01em; color: var(--muted); text-wrap: pretty; }
+.chapter-text strong { font-weight: 400; transition: color .4s ease; }
+.chapters-list li.is-lit .chapter-dot { background: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.chapters-list li.is-lit .chapter-name,
+.chapters-list li.is-lit .chapter-text strong { color: var(--ink); }
+.chapters-coda { max-width: 44ch; margin: clamp(56px, 8vh, 88px) 0 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+
+/* ---------- Playground ---------- */
+.playground { padding-block: 0 var(--section-space); padding-inline: var(--gutter); }
+.playground h2 { margin: 0; font-size: clamp(36px, 4vw, 56px); font-weight: 400; line-height: 1.1; letter-spacing: -.018em; }
+.play-row {
+  list-style: none;
+  margin: clamp(40px, 6vh, 64px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 40px);
+}
+.play-item { min-width: 0; }
+.play-media { aspect-ratio: 4 / 3; overflow: hidden; }
+.play-kind { margin: 18px 0 6px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.play-title { margin: 0; font-size: 20px; line-height: 1.3; transition: color .2s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .play-media > * { transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+  .play-item:hover .play-media > * { transform: scale(1.03); }
+}
+
+/* ---------- Contact ---------- */
+.contact { padding-block: var(--section-space) clamp(96px, 14vh, 140px); padding-inline: var(--gutter); }
+.contact h2 { margin: 0; font-size: clamp(56px, 7vw, 112px); font-weight: 400; line-height: 1; letter-spacing: -.025em; }
+.contact-lede { margin: 24px 0 0; font-size: clamp(18px, 1.4vw, 22px); color: var(--ink-2); }
+.contact-links { display: flex; flex-wrap: wrap; gap: 12px 32px; margin: 40px 0 0; font-size: 18px; font-weight: 500; }
+.contact-links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color .2s ease; }
+@media (hover: hover) and (pointer: fine) { .contact-links a:hover { color: var(--muted); } }
+.contact-links a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+.contact-coords {
+  margin: clamp(72px, 12vh, 120px) 0 0;
+  font-family: "Google Sans Code", ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 900px) {
+  .about-intro { grid-template-columns: 1fr; }
+  .about h2 { font-size: clamp(34px, 9.5vw, 44px); }
+  .about-photo { max-width: 420px; }
+  /* the horizon turns vertical: a line down the left, chapters beside it */
+  .chapters-line { display: none; }
+  .chapters-list { grid-template-columns: 1fr; gap: 0; border-left: 1px solid var(--line); }
+  .chapters-list li { padding: 0 0 40px 28px; }
+  .chapters-list li:last-child { padding-bottom: 0; }
+  .chapter-dot { left: -5px; top: 3px; }
+  /* playground: swipe, one and a half visible */
+  .play-row {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .play-row::-webkit-scrollbar { display: none; }
+  .play-item { flex: 0 0 68%; scroll-snap-align: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-dot, .chapter-name, .chapter-text strong, .play-media > * { transition: none; }
+}
