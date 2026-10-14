@@ -7,14 +7,18 @@
   <meta property="og:image" content="assets/hero/og.jpg">
   <meta name="description" content="Vickey Lu — product designer for enterprise SaaS and AI products.">
   <title>Vickey Lu — Product Designer</title>
+  <script>/* hide the hero until the opening starts, so it never flashes (once per session; ?intro replays it) */
+    try { if ((location.search.indexOf('intro') > -1 || !sessionStorage.getItem('vl-opening')) && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('opening'); } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..700&family=Google+Sans+Code:wght@500&display=swap">
   <link rel="preload" as="image" href="assets/hero/poster.webp">
+  <link rel="preload" as="image" href="assets/hero/matte.webp">
   <link rel="stylesheet" href="styles.css?v=new-site-5">
   <link rel="stylesheet" href="selected-work.css?v=new-site-2">
   <link rel="stylesheet" href="testimonial.css?v=sets-2">
-  <link rel="stylesheet" href="hero-space.css?v=3">
+  <link rel="stylesheet" href="hero-space.css?v=horizon-1">
 </head>
 <body>
   <header class="site-header" data-nav>
@@ -38,19 +42,6 @@
         <div class="space-scene" data-space-scene>
           <div class="space-wrap" data-space-wrap>
             <video src="assets/hero/swing-loop.mp4" poster="assets/hero/poster.webp" muted loop playsinline autoplay preload="auto"></video>
-            <svg class="space-fx" viewBox="0 0 1672 941" preserveAspectRatio="none">
-              <defs>
-                <filter id="space-b6" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
-                <filter id="space-b2" x="-20%" y="-100%" width="140%" height="300%"><feGaussianBlur stdDeviation="20"/></filter>
-                <linearGradient id="space-dawn" gradientUnits="userSpaceOnUse" x1="-125" y1="0" x2="1550" y2="0">
-                  <stop offset="0" stop-color="#e9d3b6"/><stop offset=".28" stop-color="#e8e2d8"/><stop offset=".6" stop-color="#d4e6ff"/><stop offset="1" stop-color="#b9d4f5"/>
-                </linearGradient>
-              </defs>
-              <g transform="translate(125 150)">
-                <path class="rim" d="M-125 408 C200 398,450 403,600 420 S900 462,1100 501 L1550 598" stroke-width="10" filter="url(#space-b6)"/>
-                <path class="rim" d="M-125 408 C200 398,450 403,600 420 S900 462,1100 501 L1550 598" stroke-width="30" filter="url(#space-b2)"/>
-              </g>
-            </svg>
             <svg viewBox="0 0 1672 941" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="space-mt" x1="0" x2="1" y1="0" y2="0">
@@ -71,14 +62,46 @@
                 </g>
               </g>
             </svg>
+            <div class="space-night" data-space-night></div>
+            <!-- the horizon: her path, left to right -->
+            <svg class="space-horizon" viewBox="0 0 1672 941" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="hz-dawn" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1672" y2="0">
+                  <stop offset="0" stop-color="#e9d3b6" stop-opacity="0"/><stop offset=".12" stop-color="#e9d3b6"/><stop offset=".45" stop-color="#f3eee6"/><stop offset=".75" stop-color="#d4e6ff"/><stop offset="1" stop-color="#b9d4f5"/>
+                </linearGradient>
+                <filter id="hz-glow" x="-5%" y="-100%" width="110%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
+              </defs>
+              <path class="hz-glow" data-hz-glow d="M0 558 C325 548,575 553,725 570 S1025 612,1225 651 L1675 748" filter="url(#hz-glow)"/>
+              <path class="hz" data-hz d="M0 558 C325 548,575 553,725 570 S1025 612,1225 651 L1675 748"/>
+              <g data-hz-dots></g>
+            </svg>
+            <!-- her lower body, cut from each video frame, so she sits in front of the line -->
+            <canvas class="space-figure" data-space-figure></canvas>
+            <svg class="space-labels" viewBox="0 0 1672 941" preserveAspectRatio="none"><g data-hz-labels></g></svg>
           </div>
         </div>
-        <div class="space-night" data-space-night></div>
+        <div class="space-vignette" data-space-vignette></div>
+        <div class="space-grain" data-space-grain></div>
       </div>
       <div class="space-copy" data-space-copy>
         <h1 id="hero-heading" class="space-title"><span>See systems</span><span>Understand people</span><span>Ship clarity</span></h1>
       </div>
+      <div class="space-journey" data-space-journey aria-hidden="true">
+        <p class="space-journey-line">From designing spaces people live in<br>to systems people work in</p>
+        <p class="space-journey-place" data-space-place></p>
+      </div>
+      <p class="space-hud space-hud-bl" data-space-hud>37.3861° N · 122.0839° W<br>Now · Bay Area · California</p>
+      <p class="space-hud space-hud-br" data-space-hud aria-hidden="true">Scroll<br>01 / 05</p>
     </section>
+
+    <svg class="space-morph" data-space-morph aria-hidden="true">
+      <defs>
+        <linearGradient id="morph-dawn" data-morph-grad gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0"><stop offset="0" stop-color="#e9d3b6" stop-opacity="0"/><stop offset=".25" stop-color="#e9d3b6"/><stop offset=".5" stop-color="#ffffff"/><stop offset=".75" stop-color="#d4e6ff"/><stop offset="1" stop-color="#d4e6ff" stop-opacity="0"/></linearGradient>
+        <filter id="morph-glow" x="-5%" y="-200%" width="110%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>
+      </defs>
+      <polyline data-morph-glow fill="none" stroke="url(#morph-dawn)" stroke-width="8" filter="url(#morph-glow)" opacity="0"/>
+      <polyline data-morph-line fill="none" stroke="url(#morph-dawn)" stroke-width="2" opacity="0"/>
+    </svg>
 
     <div class="after-hero" data-after-hero>
     <section class="intro" id="about" aria-labelledby="intro-heading">
@@ -291,6 +314,6 @@
   <script src="script.js?v=scroll-replay-2"></script>
   <script src="selected-work.js?v=project-01-copy-1" defer></script>
   <script src="testimonial.js?v=sets-2" defer></script>
-  <script src="hero-space.js?v=1" defer></script>
+  <script src="hero-space.js?v=horizon-1" defer></script>
 </body>
 </html>

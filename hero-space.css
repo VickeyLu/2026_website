@@ -1,4 +1,5 @@
-/* Space hero: pinned cinematic opening. The rest of the page (.after-hero) slides up over it with a straight edge (B4). */
+/* Space hero: pinned cinematic opening. The motif is the horizon line: her path, left to right.
+   The rest of the page (.after-hero) slides up over it, and the curved horizon straightens into its top edge. */
 .space-hero {
   position: sticky;
   top: 0;
@@ -8,6 +9,9 @@
   overflow: hidden;
   background: var(--space);
   color: var(--on-space);
+  --hud: "Google Sans Code", ui-monospace, "SF Mono", Menlo, monospace;
+  /* small text on the bright Earth: pure white plus a halo that hugs each letter (the Earth itself is untouched) */
+  --halo: 0 0 1px rgba(5, 7, 11, .9), 0 0 4px rgba(5, 7, 11, .55), 0 0 10px rgba(5, 7, 11, .35);
 }
 
 .space-stage { position: absolute; inset: 0; }
@@ -18,30 +22,35 @@
 .space-wrap video { object-fit: cover; }
 .space-wrap svg { pointer-events: none; }
 
-.space-fx .rim { fill: none; stroke: url(#space-dawn); opacity: 0; }
-.space-fx.play .rim { animation: space-halo 4s .3s ease-in-out forwards; }
-@keyframes space-halo { 0% { opacity: 0 } 45% { opacity: .22 } 100% { opacity: 0 } }
+/* dark before dawn; the opening fades it out */
+.space-night { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
 
-.space-night {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 1;
-  background: radial-gradient(ellipse 75% 95% at 4% 70%, rgba(3, 5, 10, .2), rgba(3, 5, 10, .72) 72%);
-}
-.space-night.play { animation: space-dawn 3.5s .15s cubic-bezier(.35, 0, .2, 1) forwards; }
-.space-night.static { opacity: 0; }
-@keyframes space-dawn { to { opacity: 0 } }
+/* horizon line + stops */
+.space-horizon .hz,
+.space-horizon .hz-glow { fill: none; stroke: url(#hz-dawn); }
+.space-horizon circle { fill: #fff; }
+.space-labels { filter: drop-shadow(0 0 1px rgba(5, 7, 11, .9)) drop-shadow(0 0 4px rgba(5, 7, 11, .55)); }
+.space-labels text { font-family: var(--hud); font-weight: 500; fill: #fff; letter-spacing: .1em; }
+.space-labels line { stroke: rgba(255, 255, 255, .35); }
+.space-figure { position: absolute; display: block; pointer-events: none; }
 
+.space-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 80% 75% at 55% 50%, transparent 55%, rgba(0, 0, 0, .55) 100%); }
+.space-grain { position: absolute; inset: -50%; pointer-events: none; opacity: .09; mix-blend-mode: overlay; animation: space-grain 1s steps(6) infinite; }
+@keyframes space-grain { 0%{transform:translate(0,0)} 20%{transform:translate(-3%,2%)} 40%{transform:translate(2%,-4%)} 60%{transform:translate(-4%,-1%)} 80%{transform:translate(3%,3%)} 100%{transform:translate(0,0)} }
+
+/* before the opening script runs: dark, nothing drawn yet */
+.opening .space-night { opacity: 1; }
+.opening .space-copy, .opening .space-hud, .opening .space-horizon, .opening .space-labels, .opening .space-figure, .opening .space-vignette { opacity: 0; }
+
+/* the three lines */
 .space-copy {
   position: absolute;
-  left: clamp(24px, 6vw, 112px);
+  left: var(--gutter, clamp(24px, 6vw, 112px));
   top: 50%;
   max-width: 46vw;
   transform: translateY(-58%);
   will-change: transform, opacity;
 }
-.space-kicker { margin: 0 0 1.4em; font-size: clamp(13px, 1.05vw, 16px); color: var(--on-space-muted); }
 .space-title {
   margin: 0;
   font-size: clamp(56px, 6.25vw, 80px);
@@ -51,22 +60,51 @@
   text-wrap: balance;
 }
 .space-title > span { display: block; white-space: nowrap; }
-.space-cred { margin: 1.6em 0 0; font-size: clamp(13px, 1vw, 15px); line-height: 1.7; color: var(--on-space-muted); }
 
-/* the page that rises over the hero */
-.after-hero { position: relative; z-index: 1; background: var(--paper); }
-.after-hero::before {
-  content: "";
+/* opening only: one fixed sentence, and the place underneath it changes */
+.space-journey {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: -1px;
-  height: 2px;
-  opacity: var(--rim, 0);
+  left: 50%;
+  bottom: 14%;
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+  font-family: var(--hud);
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(200, 220, 255, 0) 0%, rgba(214, 230, 255, .95) 30%, #fff 50%, rgba(214, 230, 255, .95) 70%, rgba(200, 220, 255, 0) 100%);
-  box-shadow: 0 0 18px 4px rgba(190, 215, 255, .55);
+  opacity: 0;
 }
+.space-journey p { margin: 0; }
+.space-journey-line { font-size: 11px; line-height: 1.7; letter-spacing: .12em; color: rgba(255, 255, 255, .5); }
+.space-journey-place { font-size: 13px; letter-spacing: .12em; color: rgba(255, 255, 255, .95); }
+
+/* corner text: arrives after the opening */
+.space-hud {
+  position: absolute;
+  bottom: 32px;
+  margin: 0;
+  font-family: var(--hud);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, .92);
+  text-shadow: var(--halo);
+  pointer-events: none;
+}
+.space-hud-bl { left: var(--gutter, clamp(24px, 6vw, 112px)); }
+.space-hud-br { right: var(--gutter, clamp(24px, 6vw, 112px)); text-align: right; }
+
+/* scroll: the curved horizon straightens into the top edge of the page that rises */
+.space-morph { position: fixed; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none; }
+.after-hero { position: relative; z-index: 1; background: var(--paper); }
+.space-figure-over { position: fixed; z-index: 3; display: none; pointer-events: none; }
 
 /* nav reads white while it sits on the space scene */
 .site-header[data-on-dark]:not([data-scrolled]) .nav-shell { color: #ffffff; }
@@ -76,15 +114,15 @@
 }
 .site-header[data-on-dark]:not([data-scrolled]) .brand-mark { filter: invert(1); }
 
+/* phone: the horizon only shows the stretch around her, so the stops are left out */
+.space-hero.is-phone .space-horizon [data-hz-dots],
+.space-hero.is-phone .space-labels { display: none; }
 @media (max-width: 760px) and (orientation: portrait) {
   .space-copy { top: max(156px, 21svh); transform: none; max-width: 80vw; }
   .space-title { font-size: clamp(32px, 8.8vw, 40px); }
   .space-title > span { white-space: normal; }
-  .space-kicker { font-size: 13px; margin-bottom: 1.1em; }
-  .space-cred { font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .space-night { opacity: 0; animation: none; }
-  .space-fx .rim { animation: none; }
+  .space-grain { animation: none; }
 }
