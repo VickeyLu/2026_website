@@ -27,7 +27,9 @@
 .about h2 .roll > span { display: block; transform-origin: 50% 50%; will-change: transform; }
 .about h2.is-rolling { display: grid; }
 .about h2.is-rolling .roll { grid-area: 1 / 1; align-self: start; }
-.about h2 .roll.is-muted { color: var(--muted); }
+/* who I am in ink, the rest in grey (same emphasis rule as Kind words) */
+.about h2 .roll > span { color: var(--muted); }
+.about h2 .roll b { font-weight: 400; color: var(--ink); }
 .about-photo { width: 100%; aspect-ratio: 4 / 5; max-height: 560px; }
 
 /* chapters on a straight horizon */
