@@ -150,13 +150,14 @@ One long page; only case studies get their own pages. Nav: Work · About · Resu
 
 1. Opening (the hero itself, 4.8s, once per session, skippable)
 2. Hero (pinned) → the horizon straightens into the page edge
-3. Selected work — the evidence
-4. How I work — the method; each step carries the hero line it serves (SEE SYSTEMS / UNDERSTAND PEOPLE / SHIP CLARITY)
-5. Kind words — others' voice, same three labels
-6. About — "Hi, I'm Vickey." / Designer by work. Builder by instinct. Curious human everywhere else. + one photo; then the chapters on a straight horizon ("Where the three lines came from"): Architecture → see systems, Marketing → understand people, SaaS → ship clarity, AI → design for uncertainty. The line draws with the scroll; each chapter lights up as it is reached.
-7. Playground — "Path is not always linear." Architecture → Urban design → Marketing, one row of three (phones: swipe).
+3. **Act 1 — the work.** Selected work.
+4. **Act 2 — the person.** About — "Hi, I'm Vickey." / Designer by work. Builder by instinct. Curious human everywhere else. + one photo; then the chapters on a straight horizon ("Where the three lines came from"): Architecture → see systems, Marketing → understand people, SaaS → ship clarity, AI → design for uncertainty. The line draws with the scroll; each chapter lights up as it is reached.
+5. Playground — "Path is not always linear." Architecture → Urban design → Marketing, one row of three (phones: swipe).
+6. **Act 3 — working with me.** How I work — each step carries the hero line it serves (SEE SYSTEMS / UNDERSTAND PEOPLE / SHIP CLARITY).
+7. Kind words — others' voice, same three labels.
 8. Still curious? — Email · LinkedIn · Resume, then the hero's corner text once more as a bookend.
 
+The three lines repeat in order: origin (chapters) → method (How I work) → proof (Kind words), right before the invitation to talk.
 The temperature rises down the page: cinematic at the top, the person at the end. No life-photo gallery for now; a separate About page can come later.
 
 ## 9. Files
