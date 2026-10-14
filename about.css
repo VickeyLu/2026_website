@@ -20,7 +20,11 @@
   letter-spacing: -.02em;
   text-wrap: balance;
 }
-.about h2 span { color: var(--muted); }
+/* three lines that roll up one at a time as you scroll, like a wheel turning to the next line */
+.about h2 { perspective: 900px; }
+.about h2 .roll { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.about h2 .roll > span { display: block; transform-origin: 50% 0; will-change: transform; }
+.about h2 .roll.is-muted { color: var(--muted); }
 .about-photo { width: 100%; aspect-ratio: 4 / 5; max-height: 560px; }
 
 /* chapters on a straight horizon */
