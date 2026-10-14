@@ -1,7 +1,20 @@
 # Vickey Lu — 2026 Portfolio Design System
 
 The working spec for this site. Any tool (Claude, Codex, a person) should read this before changing the UI.
-Values below are the ones in the code (`styles.css`, `hero-space.css`, `selected-work.css`, `testimonial.css`).
+Values below are the ones in the code (`styles.css`, `hero-space.css`, `selected-work.css`, `testimonial.css`, `about.css`).
+
+## 0. Handoff (read first)
+
+- **Repo:** `VickeyLu/2026_website`. **Work on `new-site`.** `main` is the old live site; do not touch it until Vickey says to merge.
+- **Preview:** every push to `new-site` deploys on Vercel: `2026website-git-new-site-lusiming2012-5533.vercel.app` (Vercel login required).
+- **Stack:** static HTML + CSS + vanilla JS. No build step, no framework. Run locally with `python3 -m http.server` in the repo root.
+- **Cache-busting:** CSS/JS are linked with `?v=…` in `index.html`. Bump the version of any file you change.
+- **The opening plays once per browser session.** Add `?intro` to the URL to see it again.
+- **Do not reword copy** (hero lines, stops, About, Kind words quotes) without asking Vickey. Copy decisions are in §7.
+- **Every animation must respect `prefers-reduced-motion`** and stop when off screen.
+- **Keep this file current.** If you change a value, a component or the page order, update the matching section here in the same commit.
+- Decision history (why things are the way they are) lives in the claude.ai project doc `design-layer-v1.md`; this file is the current state only.
+
 
 ---
 
@@ -13,7 +26,7 @@ Values below are the ones in the code (`styles.css`, `hero-space.css`, `selected
 3. **Everything left-aligned to one edge.** Text, labels, controls and the nav all start on the same gutter line. No centered text blocks.
 4. **Generous whitespace.** When in doubt, add space instead of a divider, card or box.
 5. **Perception over explanation.** The reader scans; hierarchy comes from size, weight and grey vs ink, not from decoration.
-6. **Restraint.** No prop-like metaphors (hanging cards, tilted cards, color blobs). The hero is the only "moment".
+6. **Restraint.** No prop-like metaphors (hanging cards, tilted cards, color blobs). The hero is the big moment; everything after it is quiet.
 
 ---
 
@@ -43,21 +56,22 @@ Rules
 
 One family for everything: **Google Sans Flex** (Google Fonts, variable; loaded as `wght@300..700`). Fallback: `"Helvetica Neue", Arial, sans-serif`. No serif, no second display face. No true italic exists; avoid italics.
 
-One exception, on the hero only: **Google Sans Code** 500 for the small instrument text (stops, places, corner text). 11–13px, uppercase, +0.1–0.12em. Never used elsewhere.
+One exception: **Google Sans Code** 500 for the small instrument text — hero stops, opening places, corner text, and the same coordinates repeated at the very end (Contact). 11–13px, uppercase, +0.1–0.12em. Never used elsewhere.
 
 | Role | Size | Weight | Tracking | Where |
 |---|---|---|---|---|
 | Hero title | `clamp(56px, 6.25vw, 80px)`, line-height 1.2 | 400 | −0.02em | Hero three lines (phone: `clamp(32px, 8.8vw, 40px)`) |
 | Hero instrument text | 11px (places 13px) | 500 Google Sans Code | +0.1–0.12em, UPPERCASE | Stops, opening sentence, places, corners |
-| Display | `clamp(44px, 5.6vw, 80px)` | 400 | −0.02em | "Hi, I'm Vickey." |
-| Section heading (H2) | `clamp(36px, 4vw, 56px)` | 400 | −0.018em | How I work, Selected work |
-| Lede | `clamp(20px, 1.7vw, 26px)` | 400 | — | About summary (ink-2, max 34ch) |
+| Display | `clamp(44px, 5.6vw, 80px)` (phone `clamp(34px, 9.5vw, 44px)`) | 400 | −0.02em | About rotator line |
+| Contact display | `clamp(56px, 7vw, 112px)`, line-height 1 | 400 | −0.025em | "Still curious?" |
+| Section heading (H2) | `clamp(36px, 4vw, 56px)` | 400 | −0.018em | How I work, Selected work, Playground |
+| Chapter line | `clamp(20px, 1.7vw, 26px)`, line-height 1.3 | 400 | −0.01em | About chapters (muted, key phrase ink when lit) |
 | Quote | `clamp(20px, 1.6vw, 26px)` | 400 | −0.01em | Kind words (line-height 1.3) |
 | Project title | 28px | 500 | — | Selected work |
 | H3 | 24px | 500 | −0.005em | How I work steps |
 | Body | 16px | 400 | — | Descriptions (ink-2, line-height 1.6, max 32–44ch) |
 | Small | 15px | 400–500 | — | Nav links (500), company line, roles, controls |
-| Label / eyebrow | 12px | 500 | +0.08em, UPPERCASE | Section eyebrows, fact labels, quote facets |
+| Label / eyebrow | 12px | 500 | +0.08em, UPPERCASE | Section eyebrows, quote facets, step facets, chapter names, Playground kinds |
 | Number | 13px | 400 | +0.04em, tabular | Step and project indexes |
 
 Rules
@@ -87,15 +101,23 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 ## 5. Components
 
 **Nav**
-- Fixed, full width, padded to `--gutter`. Logo left, links right (Work, About, Playground, Resume).
+- Fixed, full width, padded to `--gutter`. Logo left, links right: Work (#selected-work) · About (#about) · Resume (PDF, new tab).
 - Over the hero: pure white text, 15px / 500; hover → `rgba(255,255,255,.55)`; logo inverted. No underline.
 - After scrolling: light pill (`rgba(245,244,240,.86)`, hairline border), ink text, hover → muted.
 
 **Eyebrow** — 12px / 500 / +0.08em uppercase, muted. Sits above a section's main line.
 
-**Facts row (About)** — 4 columns of label (eyebrow style) + value (16px). 2 columns under 900px.
+**About heading (rotator)** — "Hi, I'm Vickey." (20px, ink-2) above one slot that shows one line at a time: **Designer** by work. → **Builder** by instinct. → **Curious human** everywhere else. The key word is ink, the rest muted (same weight). 2.4s per line, rolls up like a wheel (0.55s), loops. The slot keeps the height of the tallest line so nothing below jumps. Photo on the right (4:5, radius 16).
 
-**Steps (How I work)** — 3 columns: line drawing (max 280px, stroke 2.2, `--drawing`), index number, H3, description.
+**Chapters (About)** — kicker "Where the three lines came from", a 1px straight line (the hero's horizon, straightened) that draws 1:1 with scroll, four stops in a row: name (eyebrow) + sentence. Dot and key phrase turn ink when the line reaches them. Phones: vertical line on the left, chapters stacked.
+
+**Playground row** — eyebrow + H2 "Path is not always linear.", then three items in one row: media (4:3, radius 16), kind (eyebrow), title (20px). Hover: image scales 1.03. Phones: horizontal swipe, ~1.5 items visible.
+
+**Contact** — "Still curious?" (contact display), one line of lede, links as underlined text (Email me · LinkedIn · Resume), then the hero corner text in Google Sans Code, muted.
+
+**Placeholder** — `.is-placeholder`: `--soft` fill, radius 16. Used until real images arrive.
+
+**Steps (How I work)** — 3 columns: line drawing (max 280px, stroke 2.2, `--drawing`), index number + facet label (`01 SEE SYSTEMS`, ink 12px uppercase), H3, description.
 
 **Project row (Selected work)** — 32/68 split, gap `clamp(48px, 6vw, 112px)`. Left: index, title (28/500), company (15, muted), description (16, ink-2). Right: media (radius 16). Hover label on media: black pill, paper text.
 
@@ -168,10 +190,21 @@ The temperature rises down the page: cinematic at the top, the person at the end
 
 | File | What it owns |
 |---|---|
-| `styles.css` | Tokens, base type, nav, About, How I work |
+| `styles.css` | Tokens, base type, nav, How I work |
 | `hero-space.css` / `hero-space.js` | Hero framing, opening timeline, horizon + stops, figure layer, corner text, meteor, scroll transition, nav-on-dark |
 | `selected-work.css` / `selected-work.js` | Project rows, media, hover label |
 | `testimonial.css` / `testimonial.js` | Kind words quote sets and paging |
-| `about.css` / `about.js` | About, chapters horizon, Playground, Contact |
+| `about.css` / `about.js` | About rotator, chapters horizon, Playground, Contact |
 | `nav.js` | Scrolled state of the nav |
 | `assets/hero/` | `swing-loop.mp4`, `poster.webp`, `matte.webp` (her lower body per video frame, 16×10 sprite), `occ.png` (meteor occlusion mask), `og.jpg` |
+
+## 10. Not done yet
+
+| Item | Waiting on |
+|---|---|
+| About photo (grey placeholder now) | Vickey's photo |
+| Playground images + links (grey placeholders, not clickable) | three images; links can point to the old site's project pages for now |
+| "Email me" link (`mailto:` is empty, marked `data-todo`) | Vickey's email address |
+| One metric per project card | Broadcast Suppression number from Vickey (others: Sense NPS +31%; Moka feedback 2–4 weeks → under 1 week; NotebookLM 0→1 across 3 surfaces) |
+| Mobile pass (phone nav wraps to two rows) | — |
+| Merge `new-site` → `main` (go live) | Vickey's go-ahead |
