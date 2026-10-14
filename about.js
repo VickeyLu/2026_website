@@ -1,26 +1,40 @@
 // About: the straight horizon draws in step with the scroll, and each chapter lights up as the line reaches it.
 // Moves only when the reader scrolls; no timers. Reduced motion: everything is shown at once.
 (() => {
-  // About heading: the three lines roll up one at a time, in step with the scroll (reversible, no timers)
+  // About heading: a loop that builds the three lines one at a time, holds, then rolls them away and starts again.
+  // Runs only while the heading is on screen; hover pauses it; reduced motion shows the three lines still.
   const roll = document.querySelector('[data-roll]');
   if (roll && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const lines = [...roll.querySelectorAll('.roll > span')];
+    const IN = .6, GAP = 1.1, HOLD = 2.6, OUT = .55, REST = .35;            // seconds
+    const CYCLE = lines.length * GAP + HOLD + OUT + REST;
     const ease = x => 1 - Math.pow(1 - x, 3);
+    const easeIn = x => x * x * x;
     const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
-    const update = () => {
-      const r = roll.getBoundingClientRect(), vh = innerHeight;
-      // the first line starts when the heading's top reaches 92% of the screen; the last is in place by 55%
-      const p = clamp((vh * .92 - r.top) / (vh * .37), 0, 1) * lines.length;
+    const outAt = (lines.length - 1) * GAP + IN + HOLD;
+    function frame(t) {
       lines.forEach((el, i) => {
-        const e = ease(clamp(p - i, 0, 1));
-        el.style.transform = e >= 1 ? 'none' : `translateY(${(1 - e) * 105}%) rotateX(${(1 - e) * -55}deg)`;
-        el.style.opacity = (.15 + .85 * e).toFixed(3);
+        const inP = ease(clamp((t - i * GAP) / IN, 0, 1));
+        const outP = easeIn(clamp((t - outAt - i * .06) / OUT, 0, 1));
+        const y = (1 - inP) * 105 - outP * 105;                             // in from below, out through the top
+        const rx = (1 - inP) * -55 + outP * 55;                             // a slight drum turn
+        el.style.transform = (y === 0 && rx === 0) ? 'none' : `translateY(${y.toFixed(2)}%) rotateX(${rx.toFixed(1)}deg)`;
+        el.style.opacity = (inP * (1 - outP)).toFixed(3);
       });
+    }
+    let t = 0, last = 0, raf = 0, visible = false, paused = false;
+    const tick = now => {
+      if (last) t = (t + Math.min(.1, (now - last) / 1000)) % CYCLE;
+      last = now; frame(t);
+      raf = requestAnimationFrame(tick);
     };
-    let tick = false;
-    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { tick = false; update(); }); } }, { passive: true });
-    addEventListener('resize', update, { passive: true });
-    update();
+    const run = () => { if (visible && !paused && !raf) { last = 0; raf = requestAnimationFrame(tick); } };
+    const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+    frame(0);
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? run() : stop(); }, { threshold: .4 }).observe(roll);
+    roll.addEventListener('pointerenter', () => { paused = true; stop(); });
+    roll.addEventListener('pointerleave', () => { paused = false; run(); });
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : run(); });
   }
 })();
 
