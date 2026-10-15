@@ -64,17 +64,16 @@ One long page; only case studies get their own pages. Nav: Work · About · Resu
 ## Cases (decided 2026-10-12)
 - Content is built first as Figma decks (interview presentations). Website case pages are short versions derived from the deck. Start with Sense Messaging 2.0.
 
-## Documentation (2026-10-14)
-- `AGENTS.md` = collaboration and implementation rules.
-- `DESIGN.md` = current approved design system and implementation state.
-- `docs/design-decisions.md` = decisions and history (this file).
 ## Branches (decided 2026-10-15)
 - `new-site` went live: `main` was fast-forwarded to it on 2026-10-15; the previous site was saved first as `old-site`.
 - Workflow: everything goes to `new-site` first; Vickey checks the preview; then `main` is fast-forwarded to it. Nobody commits to `main` directly.
 - Rejected: working directly on `main` (no preview step before going live); a short branch per task (more overhead than needed).
 - Deleted: `order-2`, `about-rotator-draft`, `hero-preview` (all merged), `nav-apogee-experiment` (nav prototype + logo concepts, not kept).
 
-## Documentation (cont.)
+## Documentation (2026-10-14)
+- `AGENTS.md` = collaboration and implementation rules.
+- `DESIGN.md` = current approved design system and implementation state.
+- `docs/design-decisions.md` = decisions and history (this file).
 - Code stays at the repository root for now; moving it to `src/` would require changing the Vercel root directory at the same time.
 
 ## Open items
