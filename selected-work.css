@@ -5,12 +5,12 @@
   padding-inline: var(--gutter);
 }
 
-.selected-work .work-heading { margin-bottom: clamp(72px, 12vh, 128px); }
+.selected-work .work-heading { margin-bottom: clamp(48px, 8vh, 80px); }
 .selected-work h2 {
   max-width: 16ch;
   margin: 0;
   color: var(--ink);
-  font-size: clamp(36px, 4vw, 56px);
+  font-size: 32px;
   font-weight: 400;
   line-height: 1.08;
   letter-spacing: -.018em;
@@ -33,8 +33,8 @@
   display: block;
   max-width: 360px;
   margin: 0;
-  font-size: 28px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 400;
   line-height: 1.2;
   letter-spacing: -.01em;
   overflow-wrap: break-word;
@@ -61,21 +61,21 @@
 }
 .selected-work .work-description { margin-top: 10px; }
 
-.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-title,
-.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-title {
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03, #work-project-04) .work-title,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"], [data-project="work-project-04"]) .work-title {
   max-width: none;
-  font-size: 28px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 400;
   line-height: 1.2;
   letter-spacing: -.01em;
   text-wrap: balance;
 }
-.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-project-details,
-.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-project-details {
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03, #work-project-04) .work-project-details,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"], [data-project="work-project-04"]) .work-project-details {
   padding-top: 12px;
 }
-.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-company,
-.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-company {
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03, #work-project-04) .work-company,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"], [data-project="work-project-04"]) .work-company {
   max-width: none;
   color: var(--muted);
   font-size: 15px;
@@ -83,12 +83,12 @@
   line-height: 1.4;
   letter-spacing: 0;
 }
-.selected-work :is(#work-project-01, #work-project-02, #work-project-03) .work-description,
-.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"]) .work-description {
+.selected-work :is(#work-project-01, #work-project-02, #work-project-03, #work-project-04) .work-description,
+.selected-work .work-index-item:is([data-project="work-project-01"], [data-project="work-project-02"], [data-project="work-project-03"], [data-project="work-project-04"]) .work-description {
   max-width: 44ch;
   margin-top: 16px;
   color: var(--ink-2);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: 0;
@@ -101,12 +101,12 @@
   min-height: 44px;
   margin-top: 12px;
   color: var(--ink);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16px;
-  letter-spacing: .06em;
-  text-decoration: none;
-  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: .2em;
 }
+.selected-work .work-project-status { margin: 20px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .selected-work .work-project-cta span { transition: transform 180ms var(--work-ease); }
 .selected-work .work-visual-link {
   display: block;
@@ -120,6 +120,7 @@
   margin: 0;
   overflow: hidden;
   border-radius: 16px;
+  background: var(--soft);
 }
 .selected-work .work-hover-cursor {
   --cursor-x: 0px;
@@ -178,6 +179,7 @@
   object-fit: cover;
 }
 .selected-work .work-video { background: var(--soft); }
+.selected-work .work-visual img { object-fit: contain; }
 .selected-work .work-placeholder {
   display: grid;
   place-items: center;
@@ -203,7 +205,7 @@
     top: clamp(100px, 14vh, 144px);
   }
   .selected-work .work-index-list { list-style: none; padding: 0; margin: 0; }
-  .selected-work .work-index-item { position: relative; padding: 0 0 28px 24px; margin-bottom: 20px; }
+  .selected-work .work-index-item { position: relative; padding: 0 0 20px 24px; margin-bottom: 12px; }
   .selected-work .work-index-item:last-child { padding-bottom: 0; margin-bottom: 0; }
   .selected-work .work-index-item::before {
     content: "";
@@ -244,6 +246,7 @@
   }
   .selected-work .work-index-details > div { min-height: 0; overflow: hidden; }
   .selected-work .work-index-item.is-current .work-index-details { grid-template-rows: 1fr; opacity: 1; }
+  .selected-work .work-index-item:not(.is-current) .work-project-cta { visibility: hidden; }
   .selected-work[data-keyboard] .work-index * { transition: none; }
 }
 
@@ -264,7 +267,7 @@
 
 @media (max-width: 760px) {
   .selected-work .work-projects { gap: 112px; }
-  .selected-work .work-visual { aspect-ratio: 1.18; }
+  .selected-work .work-visual { aspect-ratio: 1.48; }
 }
 
 @media (prefers-reduced-motion: reduce) {

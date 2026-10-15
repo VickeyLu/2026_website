@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Hero 明暗对比 · Vickey Lu</title>
+  <style>
+    body { margin: 0; background: #05070b; }
+    #stage, iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+    .proto-picker {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2147483647;
+      display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 999px;
+      background: rgba(10,10,10,.82); -webkit-backdrop-filter: blur(12px) saturate(1.4); backdrop-filter: blur(12px) saturate(1.4);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset, 0 8px 24px rgba(0,0,0,.24), 0 2px 6px rgba(0,0,0,.12);
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size: 13px; line-height: 1;
+      -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none; white-space: nowrap;
+    }
+    .proto-picker-highlight { position: absolute; top: 4px; left: 0; height: 28px; border-radius: 999px; background: rgba(255,255,255,.12); will-change: transform; }
+    .proto-picker[data-ready] .proto-picker-highlight { transition: transform 250ms cubic-bezier(.23,1,.32,1), width 250ms cubic-bezier(.23,1,.32,1); }
+    .proto-picker-item { position: relative; display: flex; align-items: center; height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: rgba(255,255,255,.55); font: inherit; cursor: pointer; transition: color 150ms ease-out; }
+    .proto-picker-item:hover { color: rgba(255,255,255,.85); }
+    .proto-picker-item:active { transform: scale(.97); }
+    .proto-picker-item:focus-visible { outline: 2px solid rgba(255,255,255,.4); outline-offset: 2px; }
+    .proto-picker-item[data-active] { color: #fff; }
+    .proto-picker-divider { width: 1px; height: 16px; margin: 0 4px; background: rgba(255,255,255,.12); }
+    .proto-picker-replay { padding: 0 10px; font-size: 14px; }
+    .proto-picker[data-position="top"] { bottom: auto; top: 24px; }
+    .controls { position: fixed; right: 20px; top: 80px; z-index: 5; padding: 8px 12px; border-radius: 8px; background: oklch(.15 0 0 / .92); color: oklch(.85 0 0); font: 14px/1.5 system-ui,sans-serif; }
+    .controls summary { cursor: pointer; min-height: 28px; display: flex; align-items: center; }
+    .controls label { display: grid; gap: 6px; margin-block: 12px; }
+    .controls input { width: 180px; min-height: 32px; }
+    .controls button { min-height: 44px; border: 1px solid oklch(.4 0 0); background: transparent; color: inherit; border-radius: 4px; padding-inline: 12px; cursor: pointer; }
+    .controls button:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { .proto-picker[data-ready] .proto-picker-highlight, .proto-picker-item { transition: none; } }
+  </style>
+</head>
+<body>
+  <main id="stage"></main>
+  <details class="controls">
+    <summary>预览设置</summary>
+    <label for="earth">地球亮度 <output id="earth-value">100%</output><input id="earth" type="range" min="55" max="100" value="100"></label>
+    <button id="pause" type="button">暂停画面</button>
+    <button id="copy" type="button">复制参数</button>
+  </details>
+  <nav class="proto-picker" aria-label="Prototype variants">
+    <span class="proto-picker-highlight" aria-hidden="true"></span>
+    <button class="proto-picker-item" data-active aria-current="true">1 · 原亮度</button>
+    <button class="proto-picker-item">2 · 稍暗</button>
+    <span class="proto-picker-divider" aria-hidden="true"></span>
+    <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
+  </nav>
+  <template id="preview-style">
+    <style>
+      .space-labels { filter: none; }
+      .space-labels text { font-weight: 400; fill: oklch(.82 .007 250 / .9); letter-spacing: .08em; }
+      .space-hud { font-size: 14px; font-weight: 400; color: oklch(.82 .007 250 / .9); text-shadow: none; letter-spacing: .08em; }
+      .space-horizon { filter: opacity(.72); }
+      .space-morph { filter: opacity(.72); }
+      .space-labels line { stroke: oklch(.85 0 0 / .22); }
+      .hero-grade { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: none; }
+      .hero-grade[data-ready] { display: block; }
+      .hero-grade[hidden] { display: none; }
+    </style>
+  </template>
+  <script type="module">
+    const response = await fetch('../../index.html');
+    if (!response.ok) throw new Error('Could not load portfolio preview');
+    const source = (await response.text()).replace(/<script src="hero-stars\.js[^>]*><\/script>/, '').replace('Google+Sans+Code:wght@500', 'Google+Sans+Code:wght@400;500');
+    const stage = document.getElementById('stage');
+    const picker = document.querySelector('.proto-picker');
+    const highlight = picker.querySelector('.proto-picker-highlight');
+    const items = [...picker.querySelectorAll('.proto-picker-item:not(.proto-picker-replay)')];
+    const replay = picker.querySelector('.proto-picker-replay');
+    const earth = document.getElementById('earth'), value = document.getElementById('earth-value');
+    const pause = document.getElementById('pause');
+    const variants = ['original.css', 'darker.css'];
+    let current = 0;
+    function moveHighlight() {
+      const el = items[current];
+      highlight.style.width = el.offsetWidth + 'px';
+      highlight.style.transform = `translateX(${el.offsetLeft}px)`;
+    }
+    function keys(e) {
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable || e.metaKey || e.ctrlKey || e.altKey) return;
+      const num = parseInt(e.key, 10);
+      if (num >= 1 && num <= 2) setActive(num - 1);
+      else if (e.key === 'ArrowRight') setActive((current + 1) % 2);
+      else if (e.key === 'ArrowLeft') setActive((current + 1) % 2);
+      else if (e.key.toLowerCase() === 'r') mount(current);
+      else return;
+      e.preventDefault();
+    }
+    function mount(i) {
+      stage.replaceChildren();
+      const frame = document.createElement('iframe');
+      frame.title = i === 0 ? '原亮度作品集预览' : '稍暗作品集预览';
+      const base = new URL('../../', location.href).href;
+      const additions = document.getElementById('preview-style').innerHTML + `<link rel="stylesheet" href="proto/hero-light/${variants[i]}?v=1">`;
+      frame.srcdoc = source.replace('<head>', `<head><base href="${base}">`).replace('</head>', additions + '</head>').replace('</body>', '<script src="proto/hero-light/grade.js?v=2" defer><\/script></body>');
+      frame.addEventListener('load', () => {
+        frame.contentDocument.addEventListener('keydown', keys);
+        frame.contentDocument.addEventListener('click', event => {
+          const link = event.target.closest('a[href^="#"]');
+          if (!link) return;
+          const target = frame.contentDocument.querySelector(link.getAttribute('href'));
+          if (target) { event.preventDefault(); target.scrollIntoView(); }
+        });
+      });
+      stage.appendChild(frame);
+      earth.value = i === 0 ? 100 : 78;
+      value.textContent = earth.value + '%';
+      pause.textContent = '暂停画面';
+      pause.setAttribute('aria-pressed', 'false');
+    }
+    function setActive(i) {
+      if (i < 0 || i >= variants.length) return;
+      current = i;
+      items.forEach((el, j) => {
+        el.toggleAttribute('data-active', j === i);
+        if (j === i) el.setAttribute('aria-current', 'true'); else el.removeAttribute('aria-current');
+      });
+      moveHighlight();
+      const url = new URL(location);
+      url.searchParams.set('v', i + 1);
+      history.replaceState(null, '', url);
+      mount(i);
+    }
+    items.forEach((el, i) => el.addEventListener('click', () => setActive(i)));
+    replay.addEventListener('click', () => mount(current));
+    window.addEventListener('resize', moveHighlight);
+    document.addEventListener('keydown', keys);
+    earth.addEventListener('input', () => {
+      value.textContent = earth.value + '%';
+      stage.querySelector('iframe').contentWindow.heroPreview?.setEarth(Number(earth.value) / 100);
+    });
+    pause.addEventListener('click', () => {
+      const api = stage.querySelector('iframe').contentWindow.heroPreview;
+      const paused = pause.getAttribute('aria-pressed') !== 'true';
+      if (paused) api?.pause(); else api?.play();
+      pause.setAttribute('aria-pressed', String(paused));
+      pause.textContent = paused ? '继续播放' : '暂停画面';
+    });
+    document.getElementById('copy').addEventListener('click', async event => {
+      await navigator.clipboard.writeText(`Earth: ${earth.value}%; secondary text: 14px / 400; headline: unchanged; quiet stars: shared`);
+      event.target.textContent = '已复制';
+    });
+    setActive(Math.max(0, Math.min(1, (parseInt(new URLSearchParams(location.search).get('v'), 10) || 1) - 1)));
+    requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
+  </script>
+</body>
+</html>

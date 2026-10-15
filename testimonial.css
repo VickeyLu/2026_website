@@ -1,23 +1,21 @@
-/* Kind words: three quotes per screen (advances every 10s while on screen; hover/focus/touch pauses), one per hero line (See systems / Understand people / Ship clarity).
+/* Kind words: three quotes per screen (advances every 10s while on screen; hover/focus/touch pauses).
    Sets share one grid cell so paging never shifts the layout. */
 .testimonials {
-  min-height: 100vh;
-  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: clamp(24px, 3.5vh, 40px);
-  padding-block: var(--section-space);
+  gap: 40px;
+  padding-block: clamp(48px, 6vh, 64px) 0;
   padding-inline: var(--gutter);
 }
 
 .quote-sets { display: grid; }
+.testimonials > .eyebrow { margin-bottom: 0; }
 
 .quote-set {
   grid-area: 1 / 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(32px, 4vw, 72px);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 40px clamp(48px, 8vw, 112px);
   align-items: start;
   opacity: 0;
   visibility: hidden;
@@ -35,21 +33,14 @@
   align-content: start;
   gap: 20px;
   padding-top: 20px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-color);
 }
-
-.quote-facet {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--ink);
-}
+.quote:first-child { grid-row: span 2; }
+.quote blockquote { max-width: 36ch; }
 
 .quote blockquote {
   margin: 0;
-  font-size: clamp(20px, 1.6vw, 26px);
+  font-size: 20px;
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: -.01em;
@@ -63,39 +54,15 @@
 .quote-name { font-size: 15px; font-weight: 500; color: var(--ink); }
 .quote-role { font-size: 14px; color: var(--muted); }
 
-.quote-controls {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  font-size: 15px;
-  color: var(--muted);
-}
-.quote-controls[hidden] { display: none; }
-/* thin line that fills while a set is showing, so the change never surprises */
-.quote-progress { position: relative; width: 64px; height: 1px; background: var(--line); }
-.quote-progress[hidden] { display: none; }
-.quote-progress span { position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left center; }
-.quote-count { margin: 0; font-variant-numeric: tabular-nums; }
-.quote-count span:first-child { color: var(--ink); }
-.quote-controls button {
-  font: inherit;
-  font-weight: 500;
-  color: var(--ink);
-  background: none;
-  border: 0;
-  padding: 6px 0;
-  cursor: pointer;
-  transition: color .2s ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .quote-controls button:hover { color: var(--muted); }
-}
-.quote-controls button:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+.testimonials:focus-visible { outline: 2px solid var(--ink); outline-offset: -8px; }
 
 @media (max-width: 900px) {
   .quote-set { grid-template-columns: 1fr; gap: 40px; }
+  .quote:first-child { grid-row: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .quote-sets { gap: 48px; }
+  .quote-set { grid-area: auto; opacity: 1; visibility: visible; }
   .quote-set, .quote-set.is-current { transition: none; }
 }

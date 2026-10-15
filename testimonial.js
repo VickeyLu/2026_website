@@ -1,25 +1,23 @@
 // Kind words: sets of three quotes. Advances on its own every 10s while the section is on screen,
-// with a thin progress line so the reader can see it is about to change. Hover, focus or touch pauses it;
-// Prev / Next / arrow keys still work and restart the timer. Reduced motion: manual only.
+// hover, focus or touch pauses it. Arrow keys work when the section is focused.
+// Reduced motion: both sets are shown without automatic changes.
 (() => {
   const section = document.querySelector('.testimonials');
   if (!section) return;
 
   const sets = [...section.querySelectorAll('[data-quote-set]')];
-  const controls = section.querySelector('[data-quote-controls]');
-  const current = section.querySelector('[data-quote-current]');
-  const total = section.querySelector('[data-quote-total]');
-  const bar = section.querySelector('[data-quote-progress]');
-  const pad = n => String(n).padStart(2, '0');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (sets.length < 2) {
-    if (controls) controls.hidden = true;
+  if (reduce) {
+    sets.forEach(set => {
+      set.classList.add('is-current');
+      set.removeAttribute('aria-hidden');
+    });
     return;
   }
+  if (sets.length < 2) return;
 
   let index = 0;
-  total.textContent = pad(sets.length);
 
   function show(next) {
     index = (next + sets.length) % sets.length;
@@ -28,7 +26,6 @@
       set.classList.toggle('is-current', on);
       set.toggleAttribute('aria-hidden', !on);
     });
-    current.textContent = pad(index + 1);
     elapsed = 0;
   }
 
@@ -39,15 +36,13 @@
     if (last) elapsed += Math.min(.1, (now - last) / 1000);
     last = now;
     if (elapsed >= DWELL) show(index + 1);
-    if (bar) bar.style.transform = `scaleX(${Math.min(1, elapsed / DWELL).toFixed(4)})`;
     raf = requestAnimationFrame(tick);
   };
   const run = () => { if (!reduce && visible && !held && !document.hidden && !raf) { last = 0; raf = requestAnimationFrame(tick); } };
   const stop = () => { cancelAnimationFrame(raf); raf = 0; };
   const hold = on => { held = on; on ? stop() : run(); };
 
-  if (reduce) { if (bar) bar.parentElement.hidden = true; }
-  else {
+  {
     new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? run() : stop(); }, { threshold: .5 }).observe(section);
     section.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hold(true); });
     section.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hold(false); });
@@ -59,9 +54,7 @@
     document.addEventListener('visibilitychange', () => { document.hidden ? stop() : run(); });
   }
 
-  section.querySelector('[data-quote-prev]').addEventListener('click', () => show(index - 1));
-  section.querySelector('[data-quote-next]').addEventListener('click', () => show(index + 1));
-  controls.addEventListener('keydown', e => {
+  section.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
     if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
   });

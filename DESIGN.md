@@ -22,7 +22,7 @@ Values below are the ones in the code (`styles.css`, `hero-space.css`, `selected
 
 1. **Black and white, plus one cinematic moment.** The UI is ink on paper. Color only comes from the space hero and from real work screenshots. Nothing else gets an accent color.
    - **The motif is the horizon line: her path, left to right.** It draws in the opening, carries the career stops, and straightens into the edge of the page when you scroll.
-2. **One idea per screen.** Each section fills roughly one viewport and says one thing.
+2. **One idea per section.** Only the cinematic hero needs a full viewport. Supporting sections follow their content height.
 3. **Everything left-aligned to one edge.** Text, labels, controls and the nav all start on the same gutter line. No centered text blocks.
 4. **Generous whitespace.** When in doubt, add space instead of a divider, card or box.
 5. **Perception over explanation.** The reader scans; hierarchy comes from size, weight and grey vs ink, not from decoration.
@@ -56,20 +56,20 @@ Rules
 
 One family for everything: **Google Sans Flex** (Google Fonts, variable; loaded as `wght@300..700`). Fallback: `"Helvetica Neue", Arial, sans-serif`. No serif, no second display face. No true italic exists; avoid italics.
 
-One exception: **Google Sans Code** 500 for the small instrument text — hero stops, opening places, corner text, and the same coordinates repeated at the very end (Contact). 11–13px, uppercase, +0.1–0.12em. Never used elsewhere.
+One exception: **Google Sans Code** 500 for the small instrument text — hero stops, opening places and corner text. Stops and bottom-left coordinates are 14px; opening text remains 11–13px. Uppercase, +0.1–0.12em. Never used elsewhere.
 
 | Role | Size | Weight | Tracking | Where |
 |---|---|---|---|---|
-| Hero title | `clamp(56px, 6.25vw, 80px)`, line-height 1.2 | 400 | −0.02em | Hero three lines (phone: `clamp(32px, 8.8vw, 40px)`) |
-| Hero instrument text | 11px (places 13px) | 500 Google Sans Code | +0.1–0.12em, UPPERCASE | Stops, opening sentence, places, corners |
-| Display | `clamp(44px, 5.6vw, 80px)` (phone `clamp(34px, 9.5vw, 44px)`) | 400 | −0.02em | About rotator line |
-| Contact display | `clamp(56px, 7vw, 112px)`, line-height 1 | 400 | −0.025em | "Still curious?" |
-| Section heading (H2) | `clamp(36px, 4vw, 56px)` | 400 | −0.018em | How I work, Selected work, Playground |
+| Hero title | `clamp(48px, 5vw, 64px)`, line-height 1.2 | 400 | −0.02em | Hero three lines (phone: `clamp(32px, 8.8vw, 40px)`) |
+| Hero instrument text | Stops and bottom-left coordinates 14px; opening sentence 11px; places 13px | 500 Google Sans Code | +0.1–0.12em, UPPERCASE | Stops, opening sentence, places, coordinates |
+| Display | 48px (phone `clamp(34px, 9.5vw, 44px)`) | 400 | −0.02em | About rotator line |
+| Contact display | 48px, line-height 1 | 400 | −0.025em | "Still curious?" |
+| Section heading (H2) | 32px | 400 | −0.018em | How I work, Selected work, Playground |
 | Chapter line | `clamp(20px, 1.7vw, 26px)`, line-height 1.3 | 400 | −0.01em | About chapters (muted, key phrase ink when lit) |
-| Quote | `clamp(20px, 1.6vw, 26px)` | 400 | −0.01em | Kind words (line-height 1.3) |
-| Project title | 28px | 500 | — | Selected work |
-| H3 | 24px | 500 | −0.005em | How I work steps |
-| Body | 16px | 400 | — | Descriptions (ink-2, line-height 1.6, max 32–44ch) |
+| Quote | 20px | 400 | −0.01em | Kind words (line-height 1.3) |
+| Project title | 24px | 400 | — | Selected work |
+| H3 | 20px | 500 | −0.005em | How I work steps |
+| Body | 14px on desktop and mobile | 400 | — | Project and method descriptions, About coda, Contact lede (ink-2, line-height 1.6; description measure 32–44ch). User-approved body minimum: 14px; display text and auxiliary labels unchanged. |
 | Small | 15px | 400–500 | — | Nav links (500), company line, roles, controls |
 | Label / eyebrow | 12px | 500 | +0.08em, UPPERCASE | Section eyebrows, quote facets, step facets, chapter names, Playground kinds |
 | Number | 13px | 400 | +0.04em, tabular | Step and project indexes |
@@ -90,7 +90,7 @@ Rules
 | `--section-space` | `clamp(112px, 16vh, 168px)` — vertical padding per section |
 
 - Base unit 8px. Inside components 8–24px; between groups ~48px; between sections = `--section-space`.
-- Sections are `min-height: 100svh` and vertically centered when they hold one idea.
+- Supporting sections are content-driven, not forced to fill a viewport. How I work follows Playground's existing bottom spacing, ends with 64–96px; Kind words adds 48–64px above and lets Contact supply the next section gap.
 - Use flex/grid `gap`, not margins between siblings.
 - Breakpoints: 900px (multi-column → one column), 760px portrait (hero mobile framing).
 
@@ -109,30 +109,36 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 
 **About heading (rotator)** — "Hi, I'm Vickey." (20px, ink-2) above one slot that shows one line at a time: **Designer** by work. → **Builder** by instinct. → **Curious human** everywhere else. The key word is ink, the rest muted (same weight). 2.4s per line, rolls up like a wheel (0.55s), loops. The slot keeps the height of the tallest line so nothing below jumps. Photo on the right (4:5, radius 16).
 
-**Chapters (About)** — kicker "Where the three lines came from", a 1px straight line (the hero's horizon, straightened) that draws 1:1 with scroll, four stops in a row: name (eyebrow) + sentence. Dot and key phrase turn ink when the line reaches them. Phones: vertical line on the left, chapters stacked.
+**Chapters (About)** — "Different chapters, same instinct: understand the whole, find the pattern, build something clearer." introduces the timeline in sentence case, 14px, with 40px below it; no repeated closing sentence. A 1px straight line (the hero's horizon, straightened) draws 1:1 with scroll, with four stops in a row: name (eyebrow) + sentence. Dot and key phrase turn ink when the line reaches them. Phones: vertical line on the left, chapters stacked.
 
 **Playground row** — eyebrow + H2 "Path is not always linear.", then three items in one row: media (4:3, radius 16), kind (eyebrow), title (20px). Hover: image scales 1.03. Phones: horizontal swipe, ~1.5 items visible.
 
-**Contact** — "Still curious?" (contact display), one line of lede, links as underlined text (Email me · LinkedIn · Resume), then the hero corner text in Google Sans Code, muted.
+**Contact** — "Still curious?" (contact display), one line of lede, links as underlined text (Email me · LinkedIn · Resume). No repeated coordinates below the links.
 
 **Placeholder** — `.is-placeholder`: `--soft` fill, radius 16. Used until real images arrive.
 
-**Steps (How I work)** — 3 columns: line drawing (max 280px, stroke 2.2, `--drawing`), index number + facet label (`01 SEE SYSTEMS`, ink 12px uppercase), H3, description.
+**Local spacing and readability refinements** — About intro text is vertically centered beside the portrait; chapters follow after `clamp(64px, 9vh, 96px)`. Chapter hairlines use `--line-color`. Selected work heading-to-content spacing is `clamp(48px, 8vh, 80px)`; all four descriptions share 14px / 1.6 / ink-2. The first project video retains its 1.48 aspect ratio on phones instead of a taller crop. Contact links retain their text underline with a 44px minimum hit height.
 
-**Project row (Selected work)** — 32/68 split, gap `clamp(48px, 6vw, 112px)`. Left: index, title (28/500), company (15, muted), description (16, ink-2). Right: media (radius 16). Hover label on media: black pill, paper text.
+**Steps (How I work)** — 3 columns: line drawing (max 220px desktop / 200px stacked, stroke 2.2, `--drawing`), 24px gap, H3, description. Heading-to-diagrams gap is 40–64px; stacked steps use 48px. Phone anchor offset is 120px to clear the two-row nav. The three small numbered facet labels were removed at the user's request.
+
+**Project row (Selected work)** — 32/68 split, gap `clamp(48px, 6vw, 112px)`. Left: index, title (24/400), company (15, muted), description (14, ink-2). Sense has a persistent 14px underlined case-study link; projects without destinations say "Overview only" without a fake link. Index item spacing is 20px padding + 12px gap. Right: consistent 1.48 media frame, radius 16, soft neutral background; images fit without cropping, original artwork/colors unchanged. Hover label remains supplementary, not the only case entry.
+
+**Typography revision approved 2026-10-14** — The user approved the quieter desktop hierarchy: 64 / 48 / 32 / 24 / 20 / 14px. Hero and About retain their smaller phone sizes. This supersedes the earlier display sizes recorded in the decision history; copy, structure, labels, spacing rules and animation behavior remain unchanged.
 
 **Quote set (Kind words)**
-- Three columns, one per hero line. Each column: hairline on top, facet label (12px ink uppercase), quote, name (15/500 ink) + role (14, muted).
-- Quote text is muted; only hiring-signal phrases are ink, same weight.
-- Sets of three, paged with text controls; advances every 10s while on screen. Stacks to one column under 900px.
+- Two columns (1.2:1): one lead quote on the left, two supporting quotes stacked on the right, preserving reading order. Each quote: subtle hairline, quote, name (15/500 ink) + role (14, muted). Both sets omit the small facet labels at the user's request.
+- Quote text stays 20px, max 36ch; one hiring-signal phrase per quote is ink, same weight. No quotation wording changed.
+- Sets of three; advances every 10s while on screen, without visible paging controls. Stacks to one column under 900px. Reduced motion shows both sets in normal flow.
 
-**Hero layers** (bottom to top, all in one scene box so they scale together): video → night (black, opening only) → horizon line + stop dots → her lower body (cut from each video frame with `assets/hero/matte.webp`, so she sits in front of the line) → stop labels. Above the scene: vignette, grain, title, opening text, corner text.
+**Hero layers** (bottom to top, all in one scene box so they scale together): video → night (black, opening only) → horizon line + stop dots → stop labels. The per-frame silhouette in `assets/hero/matte.webp` masks only the horizon and its glow, including the screen-space line during scrolling. No video pixels are redrawn over the person, avoiding a rectangular seam at the crop boundary. The scrolling mask stops at the rising page edge. Above the scene: vignette, grain, title, opening text, corner text.
 - **Stops** (desktop only; phones leave them out): `TRAINED IN / ARCHITECTURE`, `6+ YEARS IN / PRODUCT DESIGN`, `GOOGLE LABS / NOTEBOOKLM`. Always two lines, centered under a small tick. Nothing is drawn under her feet.
-- **Corner text** (bottom-left / bottom-right, on the gutter): `37.3861° N · 122.0839° W / NOW · BAY AREA · CALIFORNIA` and `SCROLL / 01 / 05`.
+- Stop text stays at least 24px inside the viewport when the scene is cropped on narrow tablets; the scene and horizon anchors do not move.
+- **Corner text** (bottom-left, on the gutter, 14px): `37.3861° N · 122.0839° W / NOW · BAY AREA · CALIFORNIA`. Bottom-right `SCROLL / 01 / 05` removed at the user's request.
 - **Small text on the bright Earth:** pure white plus a halo that hugs each letter (`drop-shadow` 1px + 4px, `text-shadow` 1/4/10px in `#05070B`). Never a box or a dimmed band — the Earth stays untouched.
+- **Star refinement (2026-10-14):** retain original Earth brightness/color and the above small-text treatment; stops and coordinates remain 14px. `hero-stars.js` lightly softens existing star highlights in one full-frame pass, feathering out above the atmosphere and protecting the person. It does not brighten surviving stars or recolor the Earth. Original video remains the fallback if WebGL is unavailable. The darker/lower-contrast experiments stay isolated under `proto/hero-light/` and are not the approved main page.
 - **Title placement:** a little above center, but always at least 56px clear of the horizon (JS measures it).
 
-**Text controls** — `01 / 02 · Prev · Next · ——` (the last item is a 64px progress line when the set advances on its own). Counter tabular, current number ink, rest muted. Buttons are plain text 15/500 ink, hover muted. No arrows-in-circles, no dots.
+**Quote controls** — No visible page counter, Prev / Next buttons or progress line. The section is keyboard-focusable, pauses while focused, and supports left/right arrow keys.
 
 ---
 
@@ -153,7 +159,7 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 - **Everywhere else:** crossfades ~400–450ms; line-by-line reveals 600ms with 80ms stagger. One easing family.
 - **Things that move on their own (only these two, changed 2026-10-14):**
   - About heading: one line at a time, Designer → Builder → Curious human, 2.4s each, loops while on screen.
-  - Kind words: next set every 10s while the section is on screen, with a thin progress line under the controls.
+  - Kind words: next set every 10s while the section is on screen; no visible paging controls. Reduced motion shows all quotes without auto-advance.
   - Both pause on hover (and Kind words on focus or touch), stop when off screen or in a background tab, and are off under reduced motion. Manual controls always win.
 - **Never:** bouncing, swinging/physics UI, parallax on text, anything that moves without a way to pause it.
 - Everything respects `prefers-reduced-motion` (video paused, no fades).
@@ -177,11 +183,11 @@ One long page; only case studies get their own pages. Nav: Work · About · Resu
 1. Opening (the hero itself, 4.8s, once per session, skippable)
 2. Hero (pinned) → the horizon straightens into the page edge
 3. **Act 1 — the work.** Selected work.
-4. **Act 2 — the person.** About — "Hi, I'm Vickey." / Designer by work. Builder by instinct. Curious human everywhere else. + one photo; then the chapters on a straight horizon ("Where the three lines came from"): Architecture → see systems, Marketing → understand people, SaaS → ship clarity, AI → design for uncertainty. The line draws with the scroll; each chapter lights up as it is reached.
+4. **Act 2 — the person.** About — "Hi, I'm Vickey." / Designer by work. Builder by instinct. Curious human everywhere else. + one photo; then the chapters on a straight horizon, introduced by "Different chapters, same instinct: understand the whole, find the pattern, build something clearer.": Architecture → see systems, Marketing → understand people, SaaS → ship clarity, AI → design for uncertainty. The line draws with the scroll; each chapter lights up as it is reached.
 5. Playground — "Path is not always linear." Architecture → Urban design → Marketing, one row of three (phones: swipe).
-6. **Act 3 — working with me.** How I work — each step carries the hero line it serves (SEE SYSTEMS / UNDERSTAND PEOPLE / SHIP CLARITY).
-7. Kind words — others' voice, same three labels.
-8. Still curious? — Email · LinkedIn · Resume, then the hero's corner text once more as a bookend.
+6. **Act 3 — working with me.** How I work — each step has a diagram, title and description, without the numbered hero-line labels.
+7. Kind words — others' voice, without repeated facet labels.
+8. Still curious? — Email · LinkedIn · Resume; no repeated coordinates.
 
 The three lines repeat in order: origin (chapters) → method (How I work) → proof (Kind words), right before the invitation to talk.
 The temperature rises down the page: cinematic at the top, the person at the end. No life-photo gallery for now; a separate About page can come later.
@@ -191,7 +197,7 @@ The temperature rises down the page: cinematic at the top, the person at the end
 | File | What it owns |
 |---|---|
 | `styles.css` | Tokens, base type, nav, How I work |
-| `hero-space.css` / `hero-space.js` | Hero framing, opening timeline, horizon + stops, figure layer, corner text, meteor, scroll transition, nav-on-dark |
+| `hero-space.css` / `hero-space.js` | Hero framing, opening timeline, horizon + stops, line occlusion masks, corner text, meteor, scroll transition, nav-on-dark |
 | `selected-work.css` / `selected-work.js` | Project rows, media, hover label |
 | `testimonial.css` / `testimonial.js` | Kind words quote sets and paging |
 | `about.css` / `about.js` | About rotator, chapters horizon, Playground, Contact |

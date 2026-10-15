@@ -21,7 +21,7 @@
 
   const $ = s => hero.querySelector(s);
   const wrap = $('[data-space-wrap]'), scene = $('[data-space-scene]'), video = $('video'), night = $('[data-space-night]');
-  const hz = $('[data-hz]'), hzg = $('[data-hz-glow]'), dotsG = $('[data-hz-dots]'), lblG = $('[data-hz-labels]'), fig = $('[data-space-figure]');
+  const hz = $('[data-hz]'), hzg = $('[data-hz-glow]'), dotsG = $('[data-hz-dots]'), lblG = $('[data-hz-labels]');
   const copy = $('[data-space-copy]'), journey = $('[data-space-journey]'), place = $('[data-space-place]'), vignette = $('[data-space-vignette]');
   const huds = [...hero.querySelectorAll('[data-space-hud]')], meteor = $('[data-meteor]');
   const morph = document.querySelector('[data-space-morph]');
@@ -71,45 +71,60 @@
   }
   const END = { night: 0, line: 1, lineOp: .55, dots: [1, 1, 1], title: 1, hud: 1, journey: 0, place: '', placeOp: 0 };
 
-  // ---------- figure layer: her body is redrawn above the line every video frame ----------
-  const fx = fig.getContext('2d');
-  const matte = new Image(); let matteReady = false, mediaTime = 0;
-  matte.onload = () => { matteReady = true; drawFigure(); };
-  matte.src = MATTE.src;
-  function drawFigure() {
-    if (!fig.width) return;
-    fx.globalCompositeOperation = 'source-over'; fx.clearRect(0, 0, fig.width, fig.height);
-    if (!matteReady || video.readyState < 2) return;
-    const i = Math.round(mediaTime * MATTE.fps) % MATTE.n;
-    fx.drawImage(video, MATTE.bx, MATTE.by, MATTE.bw, MATTE.bh, 0, 0, fig.width, fig.height);
-    fx.globalCompositeOperation = 'destination-in';
-    fx.drawImage(matte, (i % MATTE.cols) * MATTE.fw, Math.floor(i / MATTE.cols) * MATTE.fh, MATTE.fw, MATTE.fh, 0, 0, fig.width, fig.height);
-    if (state.night > 0) { fx.globalCompositeOperation = 'source-atop'; fx.fillStyle = `rgba(0,0,0,${state.night})`; fx.fillRect(0, 0, fig.width, fig.height); }
-    fx.globalCompositeOperation = 'source-over';
-    drawOver();
+  // Mask the lines, never redraw video pixels over the original video.
+  function createLineMask(svg, id, lines) {
+    const defs = svg.querySelector('defs');
+    const clip = document.createElementNS(SVGNS, 'clipPath');
+    clip.id = `${id}-frame`;
+    clip.innerHTML = `<rect width="${MATTE.fw}" height="${MATTE.fh}"/>`;
+    defs.appendChild(clip);
+    const mask = document.createElementNS(SVGNS, 'mask');
+    mask.id = id;
+    mask.setAttribute('maskUnits', 'userSpaceOnUse');
+    mask.innerHTML = `<rect width="100%" height="100%" fill="white"/><g><g clip-path="url(#${clip.id})"><image href="${MATTE.src}" width="${MATTE.cols * MATTE.fw}" height="${Math.ceil(MATTE.n / MATTE.cols) * MATTE.fh}" style="filter:brightness(0)"/></g></g>`;
+    defs.appendChild(mask);
+    lines.forEach(line => line.setAttribute('mask', `url(#${id})`));
+    return { mask, region: mask.querySelector('g'), image: mask.querySelector('image') };
   }
-  // while scrolling, the straightening line is drawn above the whole page, so a copy of her sits above it too
-  // (clipped at the page edge, so she never shows on the paper)
-  const over = document.createElement('canvas'); over.className = 'space-figure-over'; over.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(over);
-  const ox2 = over.getContext('2d');
-  function drawOver() {
-    if (!morphHide) { if (over.style.display !== 'none') over.style.display = 'none'; return; }
-    const r = fig.getBoundingClientRect(), cut = Math.max(0, r.bottom - after.getBoundingClientRect().top);
-    over.style.display = 'block';
-    Object.assign(over.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px`, filter: scene.style.filter, clipPath: `inset(0 0 ${cut}px 0)` });
-    if (over.width !== fig.width || over.height !== fig.height) { over.width = fig.width; over.height = fig.height; }
-    ox2.clearRect(0, 0, over.width, over.height); ox2.drawImage(fig, 0, 0);
+  const horizonMask = createLineMask(hz.ownerSVGElement, 'horizon-person-mask', [hz, hzg]);
+  const morphMask = morph && createLineMask(morph, 'morph-person-mask', [mline, mglow]);
+  const paperMask = morphMask && document.createElementNS(SVGNS, 'rect');
+  if (paperMask) {
+    paperMask.setAttribute('fill', 'white');
+    paperMask.setAttribute('width', '100%');
+    paperMask.setAttribute('height', '100%');
+    morphMask.mask.appendChild(paperMask);
+  }
+  let mediaTime = 0;
+  function updateMaskFrame() {
+    const i = Math.round(mediaTime * MATTE.fps) % MATTE.n;
+    for (const mask of [horizonMask, morphMask]) {
+      if (!mask) continue;
+      mask.image.setAttribute('x', -(i % MATTE.cols) * MATTE.fw);
+      mask.image.setAttribute('y', -Math.floor(i / MATTE.cols) * MATTE.fh);
+    }
+  }
+  function positionMask(mask, x, y, scaleX, scaleY) {
+    mask.region.setAttribute('transform', `translate(${x} ${y}) scale(${scaleX} ${scaleY})`);
+  }
+  function updateMorphMask() {
+    if (!morphHide || !morphMask) return;
+    const r = video.getBoundingClientRect();
+    const scale = Math.max(r.width / MATTE.vw, r.height / MATTE.vh);
+    positionMask(morphMask, r.left + (r.width - MATTE.vw * scale) / 2 + MATTE.bx * scale,
+      r.top + (r.height - MATTE.vh * scale) / 2 + MATTE.by * scale,
+      MATTE.bw * scale / MATTE.fw, MATTE.bh * scale / MATTE.fh);
+    paperMask.setAttribute('y', after.getBoundingClientRect().top);
   }
   if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
-    const onFrame = (now, meta) => { mediaTime = meta.mediaTime; drawFigure(); video.requestVideoFrameCallback(onFrame); };
+    const onFrame = (now, meta) => { mediaTime = meta.mediaTime; updateMaskFrame(); video.requestVideoFrameCallback(onFrame); };
     video.requestVideoFrameCallback(onFrame);
   } else {
-    const loop = () => { if (!video.paused) { mediaTime = video.currentTime; drawFigure(); } requestAnimationFrame(loop); };
+    const loop = () => { if (!video.paused) { mediaTime = video.currentTime; updateMaskFrame(); } requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
   }
-  video.addEventListener('loadeddata', drawFigure);
-  video.addEventListener('seeked', () => { mediaTime = video.currentTime; drawFigure(); });
+  video.addEventListener('loadeddata', () => { mediaTime = video.currentTime; updateMaskFrame(); });
+  video.addEventListener('seeked', () => { mediaTime = video.currentTime; updateMaskFrame(); });
 
   // ---------- layout: frame the 16:9 scene so it covers the viewport, with her ~74% across on desktop ----------
   let mobile = false;
@@ -127,17 +142,22 @@
 
     const px = v => v * IW / ww; // screen px -> scene units
     hz.style.strokeWidth = px(1.4); hzg.style.strokeWidth = px(6.3);
+    let labelRight = -Infinity;
     for (const s of stops) {
       s.c.setAttribute('r', px(3.4));
       const l = s.g.querySelector('line'), t = s.g.querySelector('text');
       l.setAttribute('y1', s.p.y + px(6)); l.setAttribute('y2', s.p.y + px(22));
-      t.setAttribute('y', s.p.y + px(36)); t.setAttribute('font-size', px(10.5));
+      t.setAttribute('x', 0); t.setAttribute('y', 0); t.style.fontSize = '14px';
+      t.querySelectorAll('tspan').forEach(span => span.setAttribute('x', 0));
+      const halfLabel = px(t.getBBox().width) / 2;
+      const labelX = mobile ? s.p.x : clamp(s.p.x, Math.max(px(24 - left), labelRight + px(16)) + halfLabel, px(vw - 24 - left) - halfLabel);
+      labelRight = labelX + halfLabel;
+      t.setAttribute('transform', `translate(${labelX} ${s.p.y + px(36)}) scale(${px(1)})`);
     }
-    // the video is object-fit: cover inside the wrap; place the canvas over the matte region of the frame
+    // Match the mask to the video's object-fit: cover geometry in SVG coordinates.
     const vs = Math.max(ww / MATTE.vw, wh / MATTE.vh), ox = (ww - MATTE.vw * vs) / 2, oy = (wh - MATTE.vh * vs) / 2;
-    const cw = MATTE.bw * vs, ch = MATTE.bh * vs, dpr = Math.min(2, devicePixelRatio || 1);
-    Object.assign(fig.style, { left: `${ox + MATTE.bx * vs}px`, top: `${oy + MATTE.by * vs}px`, width: `${cw}px`, height: `${ch}px` });
-    fig.width = Math.round(Math.min(MATTE.bw, cw * dpr)); fig.height = Math.round(Math.min(MATTE.bh, ch * dpr));
+    positionMask(horizonMask, (ox + MATTE.bx * vs) * IW / ww, (oy + MATTE.by * vs) * IH / wh,
+      MATTE.bw * vs * IW / ww / MATTE.fw, MATTE.bh * vs * IH / wh / MATTE.fh);
     // desktop: the three lines sit a little above center, but always clear of the horizon and its stops
     if (!mobile) {
       const h = copy.offsetHeight, gx = copy.offsetLeft;
@@ -163,7 +183,8 @@
     place.style.opacity = st.placeOp;
     huds.forEach(h => { h.style.opacity = st.hud * dotFade; });
     vignette.style.opacity = 1 - st.night;
-    drawFigure();
+    updateMaskFrame();
+    updateMorphMask();
   }
 
   // ---------- scroll: recede, and straighten the horizon into the page edge ----------
