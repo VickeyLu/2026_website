@@ -106,7 +106,6 @@
   text-decoration: underline;
   text-underline-offset: .2em;
 }
-.selected-work .work-project-status { margin: 20px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .selected-work .work-project-cta span { transition: transform 180ms var(--work-ease); }
 .selected-work .work-visual-link {
   display: block;
@@ -246,7 +245,6 @@
   }
   .selected-work .work-index-details > div { min-height: 0; overflow: hidden; }
   .selected-work .work-index-item.is-current .work-index-details { grid-template-rows: 1fr; opacity: 1; }
-  .selected-work .work-index-item:not(.is-current) .work-project-cta { visibility: hidden; }
   .selected-work[data-keyboard] .work-index * { transition: none; }
 }
 

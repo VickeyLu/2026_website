@@ -19,10 +19,6 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'work-index-trigger';
-    const number = document.createElement('span');
-    number.className = 'work-number';
-    number.textContent = project.querySelector('.work-number').textContent;
-    button.append(number);
     const title = document.createElement('span');
     title.className = 'work-title';
     title.textContent = project.querySelector('.work-title').textContent;

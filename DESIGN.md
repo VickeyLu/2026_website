@@ -121,7 +121,7 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 
 **Steps (How I work)** — 3 columns: line drawing (max 220px desktop / 200px stacked, stroke 2.2, `--drawing`), 24px gap, H3, description. Heading-to-diagrams gap is 40–64px; stacked steps use 48px. Phone anchor offset is 120px to clear the two-row nav. The three small numbered facet labels were removed at the user's request.
 
-**Project row (Selected work)** — 32/68 split, gap `clamp(48px, 6vw, 112px)`. Left: index, title (24/400), company (15, muted), description (14, ink-2). Sense has a persistent 14px underlined case-study link; projects without destinations say "Overview only" without a fake link. Index item spacing is 20px padding + 12px gap. Right: consistent 1.48 media frame, radius 16, soft neutral background; images fit without cropping, original artwork/colors unchanged. Hover label remains supplementary, not the only case entry.
+**Project row (Selected work)** — 32/68 split, gap `clamp(48px, 6vw, 112px)`. Left: title (24/400), company (15, muted), description (14, ink-2). Project numbers 01–04 are removed from both the sticky index and inline project headers. No extra case-study text link or "Overview only" status beneath descriptions, at the user's request. Sense's existing media link, hover label and non-sticky title link remain. Index item spacing is 20px padding + 12px gap. Right: consistent 1.48 media frame, radius 16, soft neutral background; images fit without cropping, original artwork/colors unchanged.
 
 **Typography revision approved 2026-10-14** — The user approved the quieter desktop hierarchy: 64 / 48 / 32 / 24 / 20 / 14px. Hero and About retain their smaller phone sizes. This supersedes the earlier display sizes recorded in the decision history; copy, structure, labels, spacing rules and animation behavior remain unchanged.
 
@@ -209,7 +209,7 @@ The temperature rises down the page: cinematic at the top, the person at the end
 | Item | Waiting on |
 |---|---|
 | About photo (grey placeholder now) | Vickey's photo |
-| Playground images: Architecture uses the old site's Webflow image (hotlinked); Urban design and Marketing are grey placeholders. All three link to the old site's project pages. | two images; then copy all three into `assets/` so nothing depends on the old site |
+| Playground images: all three use the owner's supplied Webflow covers (hotlinked) and link to the old site's project pages. | Copy all three into `assets/` later so nothing depends on the old site |
 | "Email me" link (`mailto:` is empty, marked `data-todo`) | Vickey's email address |
 | One metric per project card | Broadcast Suppression number from Vickey (others: Sense NPS +31%; Moka feedback 2–4 weeks → under 1 week; NotebookLM 0→1 across 3 surfaces) |
 | Mobile pass (phone nav wraps to two rows) | — |
