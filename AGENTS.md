@@ -9,7 +9,9 @@ You're a design + engineering partner on my personal website. I'm a senior produ
 ## 1. Project context
 
 - Repository: `VickeyLu/2026_website`
-- Working branch: `new-site`; `main` is the old live site and must not be changed without explicit approval
+- Working branch: `new-site` (all work goes here; Vercel preview per push)
+- `main` is the live site. Never commit to it directly; it only receives `new-site` after Vickey approves, so every merge stays a fast-forward
+- `old-site`: backup of the previous site. Don't change it
 - Stack: Static HTML + CSS + vanilla JavaScript; no framework or build step
 - Run locally: `python3 -m http.server` from the repository root
 - Build: None
@@ -71,7 +73,7 @@ Test: *Is this change local and easy to undo?* Yes → go. Affects the whole sit
 - Rewrite copy/content (layout of copy is fine; the words are mine)
 - Refactor code unrelated to the task
 - Touch more than ~5 files for one task — pause and explain first
-- Merge `new-site` into `main`
+- Merge `new-site` into `main` (= go live)
 
 ---
 

@@ -5,7 +5,7 @@ Values below are the ones in the code (`styles.css`, `hero-space.css`, `selected
 
 ## 0. Handoff (read first)
 
-- **Repo:** `VickeyLu/2026_website`. **Work on `new-site`.** `main` is the old live site; do not touch it until Vickey says to merge.
+- **Repo:** `VickeyLu/2026_website`. **Work on `new-site`.** `main` is the live site: never commit to it directly; it only receives `new-site` after Vickey approves. `old-site` is the backup of the previous site.
 - **Preview:** every push to `new-site` deploys on Vercel: `2026website-git-new-site-lusiming2012-5533.vercel.app` (Vercel login required).
 - **Stack:** static HTML + CSS + vanilla JS. No build step, no framework. Run locally with `python3 -m http.server` in the repo root.
 - **Cache-busting:** CSS/JS are linked with `?v=…` in `index.html`. Bump the version of any file you change.
@@ -213,4 +213,3 @@ The temperature rises down the page: cinematic at the top, the person at the end
 | "Email me" link (`mailto:` is empty, marked `data-todo`) | Vickey's email address |
 | One metric per project card | Broadcast Suppression number from Vickey (others: Sense NPS +31%; Moka feedback 2–4 weeks → under 1 week; NotebookLM 0→1 across 3 surfaces) |
 | Mobile pass (phone nav wraps to two rows) | — |
-| Merge `new-site` → `main` (go live) | Vickey's go-ahead |

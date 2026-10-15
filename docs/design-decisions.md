@@ -2,7 +2,7 @@
 
 Why things are the way they are. The current spec is `DESIGN.md` (the design system); this file is the history behind it: what was decided, when, and what was rejected.
 
-Repo: VickeyLu/2026_website · Working branch: `new-site` (preview: 2026website-git-new-site-lusiming2012-5533.vercel.app) · `order-2` and `about-rotator-draft` are already merged into new-site (kept for reference) · Earlier standalone preview: `hero-preview` · Old site (illustrated portrait) is untouched on `main`.
+Repo: VickeyLu/2026_website · Working branch: `new-site` (preview: 2026website-git-new-site-lusiming2012-5533.vercel.app) · Live: `main` · Old site (illustrated portrait) backed up on `old-site`.
 
 ## Direction
 - 黑白克制 + 一个电影感时刻: UI is black/white/grey; color comes only from the space hero and work screenshots.
@@ -68,13 +68,20 @@ One long page; only case studies get their own pages. Nav: Work · About · Resu
 - `AGENTS.md` = collaboration and implementation rules.
 - `DESIGN.md` = current approved design system and implementation state.
 - `docs/design-decisions.md` = decisions and history (this file).
+## Branches (decided 2026-10-15)
+- `new-site` went live: `main` was fast-forwarded to it on 2026-10-15; the previous site was saved first as `old-site`.
+- Workflow: everything goes to `new-site` first; Vickey checks the preview; then `main` is fast-forwarded to it. Nobody commits to `main` directly.
+- Rejected: working directly on `main` (no preview step before going live); a short branch per task (more overhead than needed).
+- Deleted: `order-2`, `about-rotator-draft`, `hero-preview` (all merged), `nav-apogee-experiment` (nav prototype + logo concepts, not kept).
+
+## Documentation (cont.)
 - Code stays at the repository root for now; moving it to `src/` would require changing the Vercel root directory at the same time.
 
 ## Open items
 - Assets from Vickey: one portrait photo; three Playground images (+ links, for now to the old site's project pages); email address for "Email me"
 - About → Playground spacing feels a little loose; tune after real images are in
 - Project cards: one metric each (Sense NPS +31%; Moka feedback cycle 2–4 weeks → <1 week; NotebookLM 0→1 across 3 surfaces; Broadcast Suppression TBD)
-- Mobile pass (the phone nav wraps to two rows), then merge `new-site` → `main`
+- Mobile pass (the phone nav wraps to two rows)
 - Clean up unused files at the repo root (hero-atmosphere.*, hero-bubble.*, *-preview.html, "2026_Portfolio website/")
 - Add the hero video scripts (fixloop4.py) and the matte script to the repo
 - Figma file still shows the old hero and order; sync when the site settles
