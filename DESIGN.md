@@ -56,12 +56,12 @@ Rules
 
 One family for everything: **Google Sans Flex** (Google Fonts, variable; loaded as `wght@300..700`). Fallback: `"Helvetica Neue", Arial, sans-serif`. No serif, no second display face. No true italic exists; avoid italics.
 
-One exception: **Google Sans Code** 500 for the small instrument text — hero stops, opening places and corner text. Stops and bottom-left coordinates are 14px; opening text remains 11–13px. Uppercase, +0.1–0.12em. Never used elsewhere.
+One exception: **Google Sans Code** 500 for the small instrument text — hero stops, opening places and corner text. Stops and bottom-left coordinates are 12px at 82% white (secondary to the title, changed 2026-10-15); opening text remains 11–13px. Uppercase, +0.1–0.12em. Never used elsewhere.
 
 | Role | Size | Weight | Tracking | Where |
 |---|---|---|---|---|
 | Hero title | `clamp(48px, 5vw, 64px)`, line-height 1.2 | 400 | −0.02em | Hero three lines (phone: `clamp(32px, 8.8vw, 40px)`) |
-| Hero instrument text | Stops and bottom-left coordinates 14px; opening sentence 11px; places 13px | 500 Google Sans Code | +0.1–0.12em, UPPERCASE | Stops, opening sentence, places, coordinates |
+| Hero instrument text | Stops and bottom-left coordinates 12px, 82% white; opening sentence 11px; places 13px | 500 Google Sans Code | +0.1–0.12em, UPPERCASE | Stops, opening sentence, places, coordinates |
 | Display | 48px (phone `clamp(34px, 9.5vw, 44px)`) | 400 | −0.02em | About rotator line |
 | Contact display | 48px, line-height 1 | 400 | −0.025em | "Still curious?" |
 | Section heading (H2) | 32px | 400 | −0.018em | How I work, Selected work, Playground |
@@ -133,9 +133,9 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 **Hero layers** (bottom to top, all in one scene box so they scale together): video → night (black, opening only) → horizon line + stop dots → stop labels. The per-frame silhouette in `assets/hero/matte.webp` masks only the horizon and its glow, including the screen-space line during scrolling. No video pixels are redrawn over the person, avoiding a rectangular seam at the crop boundary. The scrolling mask stops at the rising page edge. Above the scene: vignette, grain, title, opening text, corner text.
 - **Stops** (desktop only; phones leave them out): `TRAINED IN / ARCHITECTURE`, `6+ YEARS IN / PRODUCT DESIGN`, `GOOGLE LABS / NOTEBOOKLM`. Always two lines, centered under a small tick. Nothing is drawn under her feet.
 - Stop text stays at least 24px inside the viewport when the scene is cropped on narrow tablets; the scene and horizon anchors do not move.
-- **Corner text** (bottom-left, on the gutter, 14px): `37.3861° N · 122.0839° W / NOW · BAY AREA · CALIFORNIA`. Bottom-right `SCROLL / 01 / 05` removed at the user's request.
+- **Corner text** (bottom-left, on the gutter, 12px, 82% white): `37.3861° N · 122.0839° W / NOW · BAY AREA · CALIFORNIA`. Bottom-right `SCROLL / 01 / 05` removed at the user's request.
 - **Small text on the bright Earth:** pure white plus a halo that hugs each letter (`drop-shadow` 1px + 4px, `text-shadow` 1/4/10px in `#05070B`). Never a box or a dimmed band — the Earth stays untouched.
-- **Star refinement (2026-10-14):** retain original Earth brightness/color and the above small-text treatment; stops and coordinates remain 14px. `hero-stars.js` lightly softens existing star highlights in one full-frame pass, feathering out above the atmosphere and protecting the person. It does not brighten surviving stars or recolor the Earth. Original video remains the fallback if WebGL is unavailable. The darker/lower-contrast experiments stay isolated under `proto/hero-light/` and are not the approved main page.
+- **Star refinement (2026-10-14):** retain original Earth brightness/color and the above small-text treatment; stops and coordinates are 12px (since 2026-10-15). `hero-stars.js` lightly softens existing star highlights in one full-frame pass, feathering out above the atmosphere and protecting the person. It does not brighten surviving stars or recolor the Earth. Original video remains the fallback if WebGL is unavailable. The darker/lower-contrast experiments stay isolated under `proto/hero-light/` and are not the approved main page.
 - **Title placement:** a little above center, but always at least 56px clear of the horizon (JS measures it).
 
 **Quote controls** — No visible page counter, Prev / Next buttons or progress line. The section is keyboard-focusable, pauses while focused, and supports left/right arrow keys.

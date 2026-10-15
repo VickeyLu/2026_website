@@ -147,7 +147,7 @@
       s.c.setAttribute('r', px(3.4));
       const l = s.g.querySelector('line'), t = s.g.querySelector('text');
       l.setAttribute('y1', s.p.y + px(6)); l.setAttribute('y2', s.p.y + px(22));
-      t.setAttribute('x', 0); t.setAttribute('y', 0); t.style.fontSize = '14px';
+      t.setAttribute('x', 0); t.setAttribute('y', 0); t.style.fontSize = '12px';
       t.querySelectorAll('tspan').forEach(span => span.setAttribute('x', 0));
       const halfLabel = px(t.getBBox().width) / 2;
       const labelX = mobile ? s.p.x : clamp(s.p.x, Math.max(px(24 - left), labelRight + px(16)) + halfLabel, px(vw - 24 - left) - halfLabel);

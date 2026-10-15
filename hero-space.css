@@ -33,7 +33,7 @@
 .space-horizon .hz-glow { fill: none; stroke: url(#hz-dawn); }
 .space-horizon circle { fill: #fff; }
 .space-labels { filter: drop-shadow(0 0 1px rgba(5, 7, 11, .9)) drop-shadow(0 0 4px rgba(5, 7, 11, .55)); }
-.space-labels text { font-family: var(--hud); font-weight: 500; fill: #fff; letter-spacing: .1em; }
+.space-labels text { font-family: var(--hud); font-weight: 500; fill: rgba(255, 255, 255, .82); letter-spacing: .1em; } /* secondary to the title */
 .space-labels line { stroke: rgba(255, 255, 255, .35); }
 
 .space-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 80% 75% at 55% 50%, transparent 55%, rgba(0, 0, 0, .55) 100%); }
@@ -90,13 +90,13 @@
   bottom: 32px;
   margin: 0;
   font-family: var(--hud);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: .1em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: rgba(255, 255, 255, .92);
+  color: rgba(255, 255, 255, .82);
   text-shadow: var(--halo);
   pointer-events: none;
 }
