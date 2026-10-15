@@ -43,12 +43,20 @@
   const items = [...root.querySelectorAll('[data-chapter]')];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const vertical = root.classList.contains('path-main');   // prototype: the line runs down the page
   const light = p => items.forEach((li, i) => li.classList.toggle('is-lit', p >= (i + .15) / items.length));
-  if (reduce) { line.style.setProperty('--p', 1); light(1); return; }
+  if (reduce) { line.style.setProperty('--p', 1); items.forEach(li => li.classList.add('is-lit')); return; }
 
   const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
   function update() {
     const r = root.getBoundingClientRect(), vh = innerHeight;
+    if (vertical) {
+      // the line's tip follows a point 60% down the screen; a chapter lights when the tip reaches its dot
+      const lr = line.parentElement.getBoundingClientRect(), tip = vh * .6;
+      line.style.setProperty('--p', clamp((tip - lr.top) / lr.height, 0, 1).toFixed(3));
+      items.forEach(li => li.classList.toggle('is-lit', li.getBoundingClientRect().top + 6 <= tip));
+      return;
+    }
     // starts when the chapters enter the lower part of the screen, done by the time they reach the middle
     const p = clamp((vh * .85 - r.top) / (vh * .45), 0, 1);
     line.style.setProperty('--p', p.toFixed(3));
