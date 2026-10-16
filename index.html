@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles.css?v=consistency-1">
   <link rel="stylesheet" href="selected-work.css?v=work-labels-clean-1">
   <link rel="stylesheet" href="testimonial.css?v=consistency-1">
-  <link rel="stylesheet" href="about.css?v=proto-path-1">
+  <link rel="stylesheet" href="about.css?v=proto-path-2">
   <link rel="stylesheet" href="hero-space.css?v=labels-12">
 </head>
 <body>
@@ -101,6 +101,7 @@
     </svg>
 
     <div class="after-hero" data-after-hero>
+    <svg class="path-flow" data-path-flow aria-hidden="true" focusable="false"></svg>
     <section class="selected-work" id="selected-work" aria-labelledby="selected-work-heading">
       <header class="work-heading">
         <h2 id="selected-work-heading">Selected work</h2>
@@ -175,55 +176,49 @@
 
 
 
-    <!-- PROTOTYPE (proto-path): About + chapters + Playground as one chapter.
-         Left stays put (who I am); right scrolls (where I came from, with the work as evidence). -->
+    <!-- PROTOTYPE (proto-path v2): the path flows.
+         Chapters alternate left / right; a line made of words winds between them (with one loop: not linear),
+         then tightens into a solid ribbon that carries the method into How I work. Drawn by path-flow.js. -->
     <section class="about path" id="about" aria-labelledby="about-heading">
-      <div class="path-grid">
-        <div class="path-side">
+      <div class="about-intro">
+        <div>
           <p class="eyebrow">About</p>
           <p class="about-hi">Hi, I’m Vickey.</p>
           <h2 id="about-heading" data-roll aria-label="Designer by work. Builder by instinct. Curious human everywhere else."><span class="roll"><span><b>Designer</b> by work.</span></span><span class="roll"><span><b>Builder</b> by instinct.</span></span><span class="roll"><span><b>Curious human</b> everywhere else.</span></span></h2>
-          <div class="about-photo is-placeholder" role="img" aria-label="Photo of Vickey (coming soon)"></div>
         </div>
+        <div class="about-photo is-placeholder" role="img" aria-label="Photo of Vickey (coming soon)"></div>
+      </div>
 
-        <div class="path-main" data-chapters>
-          <p class="path-heading">Path is not always linear.</p>
-          <div class="chapters-line" aria-hidden="true"><span data-chapters-line></span></div>
-          <ol class="chapters-list">
-            <li data-chapter>
-              <span class="chapter-dot" aria-hidden="true"></span>
-              <p class="chapter-name">Architecture</p>
-              <p class="chapter-text">taught me to <strong>see systems</strong>.</p>
-              <ul class="chapter-work">
+      <p class="path-heading" data-path-start>Path is not always linear.</p>
+      <ol class="path-chapters">
+        <li class="path-chapter is-left" data-path-stop>
+          <p class="chapter-name">Architecture</p>
+          <p class="chapter-text">taught me to <strong>see systems</strong>.</p>
+          <ul class="chapter-work">
                 <li><a class="play-link" href="https://www.vickeydesign.com/works/architectural-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e2776bf2981090_Vickey%27s%20Portfolio%20NEW_Page_09%20Copy.png" alt="Limited &amp; Unlimited, an architecture project" loading="lazy" decoding="async"></div><p class="play-kind">Architecture</p><p class="play-title">Limited &amp; Unlimited</p></a></li>
                 <li><a class="play-link" href="https://www.vickeydesign.com/works/urban-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e277016598105b_Rectangle%20115.png" alt="Isolation &amp; Vitality, an urban design project" loading="lazy" decoding="async"></div><p class="play-kind">Urban design</p><p class="play-title">Isolation &amp; Vitality</p></a></li>
-              </ul>
-            </li>
-            <li data-chapter>
-              <span class="chapter-dot" aria-hidden="true"></span>
-              <p class="chapter-name">Marketing</p>
-              <p class="chapter-text">taught me to <strong>understand people</strong>.</p>
-              <ul class="chapter-work">
+          </ul>
+        </li>
+        <li class="path-chapter is-right" data-path-stop data-path-loop-after>
+          <p class="chapter-name">Marketing</p>
+          <p class="chapter-text">taught me to <strong>understand people</strong>.</p>
+          <ul class="chapter-work">
                 <li><a class="play-link" href="https://www.vickeydesign.com/works/marketing-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e277b64298108f_profolio%20DESIGN%20NEW%20copy_Page_19.png" alt="Graphic design and poster, a marketing design project" loading="lazy" decoding="async"></div><p class="play-kind">Marketing design</p><p class="play-title">Graphic design &amp; poster</p></a></li>
-              </ul>
-            </li>
-            <li data-chapter>
-              <span class="chapter-dot" aria-hidden="true"></span>
-              <p class="chapter-name">SaaS</p>
-              <p class="chapter-text">taught me to <strong>ship clarity</strong> through complexity.</p>
-            </li>
-            <li data-chapter>
-              <span class="chapter-dot" aria-hidden="true"></span>
-              <p class="chapter-name">AI</p>
-              <p class="chapter-text">is teaching me to <strong>design for uncertainty</strong>.</p>
-            </li>
-          </ol>
-          <p class="chapters-coda">Different chapters, same instinct: understand the whole, find the pattern, build something clearer.</p>
-        </div>
-      </div>
+          </ul>
+        </li>
+        <li class="path-chapter is-left" data-path-stop>
+          <p class="chapter-name">SaaS</p>
+          <p class="chapter-text">taught me to <strong>ship clarity</strong> through complexity.</p>
+        </li>
+        <li class="path-chapter is-right" data-path-stop>
+          <p class="chapter-name">AI</p>
+          <p class="chapter-text">is teaching me to <strong>design for uncertainty</strong>.</p>
+        </li>
+      </ol>
+      <p class="chapters-coda">Different chapters, same instinct: understand the whole, find the pattern, build something clearer.</p>
     </section>
 
-    <section class="how" id="how-i-work" aria-labelledby="how-heading">
+    <section class="how" id="how-i-work" aria-labelledby="how-heading" data-path-end>
       <p class="eyebrow">HOW I WORK</p>
       <h2 id="how-heading">Deep enough to map. Fast enough to simplify.</h2>
 
@@ -346,6 +341,7 @@
   <script src="testimonial.js?v=auto-2" defer></script>
   <script src="hero-space.js?v=labels-12" defer></script>
   <script src="hero-stars.js?v=1" defer></script>
-  <script src="about.js?v=proto-path-1" defer></script>
+  <script src="about.js?v=proto-path-2" defer></script>
+  <script src="path-flow.js?v=proto-path-2" defer></script>
 </body>
 </html>

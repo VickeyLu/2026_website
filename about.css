@@ -137,50 +137,37 @@
   .chapter-dot, .chapter-name, .chapter-text strong, .play-media > * { transition: none; }
 }
 
-/* ---------- PROTOTYPE (proto-path): one chapter ----------
-   Same structure as Selected work: the left column stays put, the right column scrolls.
-   Left = who I am. Right = where I came from, each chapter carrying its own work as evidence.
-   The chapters sit on the horizon turned vertical (the line draws with the scroll). */
-.path .path-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 32fr) minmax(0, 68fr);   /* same split as Selected work */
-  column-gap: clamp(48px, 6vw, 112px);
-  align-items: start;
-}
-.path .path-side { position: sticky; top: clamp(100px, 14vh, 144px); }
-.path .about-hi { margin: 24px 0 16px; }
-.path h2 { font-size: 40px; }
-.path .about-photo { margin-top: 40px; max-height: min(440px, 46vh); max-width: calc(min(440px, 46vh) * .8); }
+/* ---------- PROTOTYPE (proto-path v2): the path flows ----------
+   Chapters alternate left / right so the path has room to swing between them.
+   The path itself is drawn by path-flow.js into svg.path-flow on the .after-hero wrapper:
+   grey words along a winding line (one loop) → a solid ink ribbon with white words across How I work.
+   No new colours: muted words, ink ribbon, paper text. */
+.after-hero { position: relative; }
+.path-flow { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible; }
+.path-flow .pf-words { fill: var(--muted); font-size: 15px; letter-spacing: .01em; }
+.path-flow .pf-ribbon { fill: none; stroke: var(--ink); stroke-linecap: round; }
+.path-flow .pf-ribbon-words { fill: var(--paper); font-size: 15px; font-weight: 500; letter-spacing: .01em; }
+.path-flow .pf-joint { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
 
-.path .path-heading { margin: 0 0 56px; font-size: 32px; line-height: 1.1; letter-spacing: -.018em; color: var(--ink); }
-.path .path-main { position: relative; padding-left: 40px; }
-.path .chapters-line { position: absolute; left: 4px; top: calc(32px * 1.1 + 56px + 6px); bottom: 0; width: 1px; height: auto; background: var(--line-color); }
-.path .chapters-line span { transform-origin: center top; transform: scaleY(var(--p, 1)); }
-.path .chapters-list { display: block; }
-.path .chapters-list > li { position: relative; padding: 0 0 96px; }
-.path .chapter-dot { left: -40px; top: 2px; }
+.path .about-intro { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); }
+.path .about-photo { max-height: 480px; }
+.path .path-heading { margin: clamp(96px, 14vh, 160px) 0 0; font-size: 32px; line-height: 1.1; letter-spacing: -.018em; }
+.path .path-chapters { list-style: none; margin: 72px 0 0; padding: 0; display: grid; row-gap: clamp(120px, 16vh, 180px); }
+.path .path-chapter { width: min(100%, 560px); position: relative; z-index: 3; }
+.path .path-chapter.is-right { justify-self: end; }
+.path .chapter-name { color: var(--ink); }
 .path .chapter-text { font-size: 24px; max-width: 24ch; }
-.path .chapter-work {
-  list-style: none;
-  margin: 32px 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(20px, 2.5vw, 32px);
-}
-.path .chapter-work > li { padding: 0; }   /* don't inherit the chapter item padding */
-.path .chapters-coda { margin: 0; padding-top: 8px; }
+.path .chapter-text strong { color: var(--ink); }
+.path .chapter-work { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.path .chapter-work > li { padding: 0; }
+.path .chapters-coda { margin: clamp(120px, 16vh, 180px) 0 0; position: relative; z-index: 3; }
+/* room for the ribbon between the How I work heading and the steps */
+.how[data-path-end] h2 { margin-bottom: 176px; }
 
 @media (max-width: 900px) {
-  .path .path-grid { grid-template-columns: 1fr; row-gap: 72px; }
-  .path .path-side { position: static; }
-  .path h2 { font-size: clamp(34px, 9.5vw, 44px); }
-  .path .about-photo { max-width: 420px; max-height: none; }
-  .path .path-main { padding-left: 28px; }
-  .path .chapters-line { display: block; }
-  .path .chapters-list { border-left: 0; }
-  .path .chapters-list > li { padding: 0 0 64px; }
-  .path .chapter-dot { left: -28px; }
-  .path .chapter-work { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .path .chapter-work > li { padding: 0; }
+  .path .about-intro { grid-template-columns: 1fr; }
+  .path .path-chapters { row-gap: 72px; }
+  .path .path-chapter { width: 100%; }
+  .path .chapter-work { gap: 12px; }
+  .how[data-path-end] h2 { margin-bottom: 120px; }
 }
