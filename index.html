@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles.css?v=consistency-1">
   <link rel="stylesheet" href="selected-work.css?v=work-labels-clean-1">
   <link rel="stylesheet" href="testimonial.css?v=consistency-1">
-  <link rel="stylesheet" href="about.css?v=9">
+  <link rel="stylesheet" href="about.css?v=eyes-1">
   <link rel="stylesheet" href="hero-space.css?v=labels-12">
 </head>
 <body>
@@ -311,8 +311,14 @@
     </section>
 
     <section class="contact" id="contact" aria-labelledby="contact-heading">
-      <h2 id="contact-heading">Still curious?</h2>
-      <p class="contact-lede">Same. That’s usually where the interesting questions begin.</p>
+      <div class="contact-head">
+        <div>
+          <h2 id="contact-heading">Still curious?</h2>
+          <p class="contact-lede">Same. That’s usually where the interesting questions begin.</p>
+        </div>
+        <!-- a small curious face: its eyes follow the pointer, and it blinks now and then -->
+        <span class="peeker" data-peeker aria-hidden="true"><span class="peeker-eyes" data-peeker-eyes><i></i><i></i></span></span>
+      </div>
       <p class="contact-links">
         <a href="mailto:" data-todo="email address">Email me</a>
         <a href="https://www.linkedin.com/in/vickey-lu/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -329,6 +335,6 @@
   <script src="testimonial.js?v=auto-2" defer></script>
   <script src="hero-space.js?v=labels-12" defer></script>
   <script src="hero-stars.js?v=1" defer></script>
-  <script src="about.js?v=4" defer></script>
+  <script src="about.js?v=eyes-1" defer></script>
 </body>
 </html>

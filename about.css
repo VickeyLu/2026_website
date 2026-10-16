@@ -108,6 +108,13 @@
   color: var(--muted);
 }
 
+/* the curious face beside "Still curious?": an ink ball whose eyes look toward the pointer */
+.contact-head { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 48px; }
+.peeker { position: relative; flex: none; width: 96px; height: 96px; border-radius: 50%; background: var(--ink); overflow: hidden; }
+.peeker-eyes { position: absolute; left: 50%; top: 50%; display: flex; gap: 10px; transform: translate(-50%, -50%); will-change: transform; }
+.peeker-eyes i { display: block; width: 7px; height: 13px; border-radius: 4px; background: var(--paper); transform-origin: 50% 50%; transition: transform 90ms ease-out; }
+.peeker.is-blinking .peeker-eyes i { transform: scaleY(.12); }
+
 /* ---------- small screens ---------- */
 @media (max-width: 900px) {
   .about-intro { grid-template-columns: 1fr; }
@@ -133,6 +140,13 @@
   .play-item { flex: 0 0 68%; scroll-snap-align: start; }
 }
 
+@media (max-width: 600px) {
+  .peeker { width: 72px; height: 72px; }
+  .peeker-eyes { gap: 8px; }
+  .peeker-eyes i { width: 6px; height: 11px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .peeker-eyes i { transition: none; }
   .chapter-dot, .chapter-name, .chapter-text strong, .play-media > * { transition: none; }
 }
