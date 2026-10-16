@@ -136,3 +136,53 @@
 @media (prefers-reduced-motion: reduce) {
   .chapter-dot, .chapter-name, .chapter-text strong, .play-media > * { transition: none; }
 }
+
+/* ---------- PROTOTYPE (proto-curious): Curious mind, with meaning ----------
+   Three soft shapes stand for the hero's three lines. A colour always means the same thing:
+     lavender = see systems · peach = understand people · sage = ship clarity · dashed outline = still forming (AI)
+   Rules: shapes sit behind pictures and drawings (or as a small mark above a chapter name), never behind text.
+   Static: no shape moves. (These colours are prototype-only; adopting them changes the black/white rule.) */
+.curious, .how { --tone-see: #e5def2; --tone-people: #f4e4cb; --tone-clarity: #dde8da; }
+[data-tone="see"] { --tone: var(--tone-see); }
+[data-tone="people"] { --tone: var(--tone-people); }
+[data-tone="clarity"] { --tone: var(--tone-clarity); }
+.blob, .curious-text::before, .step[data-tone]::before { border-radius: 62% 38% 54% 46% / 49% 58% 42% 51%; }
+
+/* intro: portrait with the three shapes peeking out behind it */
+.curious .about-intro { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); }
+.curious-portrait { position: relative; isolation: isolate; }
+.curious-portrait .about-photo { position: relative; z-index: 1; max-height: 520px; }
+.curious-portrait .blob { position: absolute; z-index: 0; }
+.curious-portrait .blob--see { width: 46%; height: 38%; left: -12%; top: -6%; background: var(--tone-see); }
+.curious-portrait .blob--clarity { width: 44%; height: 36%; right: -12%; top: 42%; background: var(--tone-clarity); border-radius: 46% 54% 38% 62% / 55% 45% 55% 45%; }
+.curious-portrait .blob--people { width: 46%; height: 30%; left: 4%; bottom: -8%; background: var(--tone-people); border-radius: 50% 50% 42% 58% / 60% 52% 48% 40%; }
+
+/* the chapters, each next to its own work */
+.curious-path { margin-top: clamp(120px, 16vh, 176px); }
+.curious .curious-heading { margin: 0; font-size: 32px; font-weight: 400; line-height: 1.1; letter-spacing: -.018em; }
+.curious .chapters-coda { margin: 20px 0 0; }
+.curious-rows { list-style: none; margin: 72px 0 0; padding: 0; display: grid; row-gap: clamp(72px, 10vh, 112px); }
+.curious-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: clamp(40px, 5vw, 80px); align-items: start; }
+.curious-text { position: relative; }
+.curious-text::before { content: ""; display: block; width: 40px; height: 34px; margin-bottom: 20px; background: var(--tone); }
+[data-tone="forming"].curious-text::before { background: transparent; box-shadow: none; border: 1.5px dashed var(--muted); }
+.curious .chapter-name { color: var(--ink); }
+.curious .chapter-text { font-size: 24px; max-width: 22ch; }
+.curious .chapter-text strong { color: var(--ink); }
+.curious-work { position: relative; isolation: isolate; }
+.curious-work .blob { position: absolute; z-index: 0; width: 200px; height: 160px; left: -36px; top: -40px; background: var(--tone); }
+.curious-work .play-row { position: relative; z-index: 1; margin: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* How I work: each drawing gets its line's colour behind it (below the heading, never under text) */
+.how .step[data-tone] { position: relative; isolation: isolate; }
+.how .step[data-tone]::before { content: ""; position: absolute; z-index: -1; left: 24px; top: 8px; width: 150px; height: 136px; background: var(--tone); }
+
+@media (max-width: 900px) {
+  .curious .about-intro { grid-template-columns: 1fr; }
+  .curious-portrait { max-width: 420px; margin-inline: 16px; }
+  .curious-row { grid-template-columns: 1fr; row-gap: 28px; }
+  .curious-row--pair { row-gap: 56px; }
+  .curious-work .blob { width: 140px; height: 112px; left: -16px; top: -24px; }
+  .curious-work .play-row { display: grid; overflow: visible; margin-inline: 0; padding-inline: 0; gap: 12px; }
+  .curious-work .play-item { flex: none; }
+}

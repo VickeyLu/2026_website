@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles.css?v=consistency-1">
   <link rel="stylesheet" href="selected-work.css?v=work-labels-clean-1">
   <link rel="stylesheet" href="testimonial.css?v=consistency-1">
-  <link rel="stylesheet" href="about.css?v=9">
+  <link rel="stylesheet" href="about.css?v=proto-curious-1">
   <link rel="stylesheet" href="hero-space.css?v=labels-12">
 </head>
 <body>
@@ -175,35 +175,63 @@
 
 
 
-    <section class="about" id="about" aria-labelledby="about-heading">
+    <!-- PROTOTYPE (proto-curious): Curious mind, with meaning.
+         Three soft shapes = the hero's three lines, and each colour always means the same thing:
+         lavender = see systems · peach = understand people · sage = ship clarity · dashed outline = still forming (AI).
+         Each chapter sits next to its own work; the shapes sit behind images and diagrams, never behind text. -->
+    <section class="about curious" id="about" aria-labelledby="about-heading">
       <div class="about-intro">
         <div>
           <p class="eyebrow">About</p>
           <p class="about-hi">Hi, I’m Vickey.</p>
           <h2 id="about-heading" data-roll aria-label="Designer by work. Builder by instinct. Curious human everywhere else."><span class="roll"><span><b>Designer</b> by work.</span></span><span class="roll"><span><b>Builder</b> by instinct.</span></span><span class="roll"><span><b>Curious human</b> everywhere else.</span></span></h2>
         </div>
-        <div class="about-photo is-placeholder" role="img" aria-label="Photo of Vickey (coming soon)"></div>
+        <div class="curious-portrait">
+          <span class="blob blob--see" aria-hidden="true"></span>
+          <span class="blob blob--people" aria-hidden="true"></span>
+          <span class="blob blob--clarity" aria-hidden="true"></span>
+          <div class="about-photo is-placeholder" role="img" aria-label="Photo of Vickey (coming soon)"></div>
+        </div>
       </div>
-      <div class="chapters" data-chapters>
+
+      <div class="curious-path">
+        <p class="eyebrow">Playground</p>
+        <h2 class="curious-heading">Path is not always linear.</h2>
         <p class="chapters-coda">Different chapters, same instinct: understand the whole, find the pattern, build something clearer.</p>
-        <div class="chapters-line" aria-hidden="true"><span data-chapters-line></span></div>
-        <ol class="chapters-list">
-          <li data-chapter><span class="chapter-dot" aria-hidden="true"></span><p class="chapter-name">Architecture</p><p class="chapter-text">taught me to <strong>see systems</strong>.</p></li>
-          <li data-chapter><span class="chapter-dot" aria-hidden="true"></span><p class="chapter-name">Marketing</p><p class="chapter-text">taught me to <strong>understand people</strong>.</p></li>
-          <li data-chapter><span class="chapter-dot" aria-hidden="true"></span><p class="chapter-name">SaaS</p><p class="chapter-text">taught me to <strong>ship clarity</strong> through complexity.</p></li>
-          <li data-chapter><span class="chapter-dot" aria-hidden="true"></span><p class="chapter-name">AI</p><p class="chapter-text">is teaching me to <strong>design for uncertainty</strong>.</p></li>
+
+        <ol class="curious-rows">
+          <li class="curious-row" data-tone="see">
+            <div class="curious-text">
+              <p class="chapter-name">Architecture</p>
+              <p class="chapter-text">taught me to <strong>see systems</strong>.</p>
+            </div>
+            <div class="curious-work">
+              <span class="blob" aria-hidden="true"></span>
+              <ul class="play-row"><li><a class="play-link" href="https://www.vickeydesign.com/works/architectural-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e2776bf2981090_Vickey%27s%20Portfolio%20NEW_Page_09%20Copy.png" alt="Limited &amp; Unlimited, an architecture project" loading="lazy" decoding="async"></div><p class="play-kind">Architecture</p><p class="play-title">Limited &amp; Unlimited</p></a></li><li><a class="play-link" href="https://www.vickeydesign.com/works/urban-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e277016598105b_Rectangle%20115.png" alt="Isolation &amp; Vitality, an urban design project" loading="lazy" decoding="async"></div><p class="play-kind">Urban design</p><p class="play-title">Isolation &amp; Vitality</p></a></li></ul>
+            </div>
+          </li>
+          <li class="curious-row" data-tone="people">
+            <div class="curious-text">
+              <p class="chapter-name">Marketing</p>
+              <p class="chapter-text">taught me to <strong>understand people</strong>.</p>
+            </div>
+            <div class="curious-work">
+              <span class="blob" aria-hidden="true"></span>
+              <ul class="play-row"><li><a class="play-link" href="https://www.vickeydesign.com/works/marketing-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e277b64298108f_profolio%20DESIGN%20NEW%20copy_Page_19.png" alt="Graphic design and poster, a marketing design project" loading="lazy" decoding="async"></div><p class="play-kind">Marketing design</p><p class="play-title">Graphic design &amp; poster</p></a></li></ul>
+            </div>
+          </li>
+          <li class="curious-row curious-row--pair">
+            <div class="curious-text" data-tone="clarity">
+              <p class="chapter-name">SaaS</p>
+              <p class="chapter-text">taught me to <strong>ship clarity</strong> through complexity.</p>
+            </div>
+            <div class="curious-text" data-tone="forming">
+              <p class="chapter-name">AI</p>
+              <p class="chapter-text">is teaching me to <strong>design for uncertainty</strong>.</p>
+            </div>
+          </li>
         </ol>
       </div>
-    </section>
-
-    <section class="playground" id="playground" aria-labelledby="playground-heading">
-      <p class="eyebrow">Playground</p>
-      <h2 id="playground-heading">Path is not always linear.</h2>
-      <ul class="play-row">
-        <li class="play-item"><a class="play-link" href="https://www.vickeydesign.com/works/architectural-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e2776bf2981090_Vickey%27s%20Portfolio%20NEW_Page_09%20Copy.png" alt="Limited &amp; Unlimited, an architecture project" loading="lazy" decoding="async"></div><p class="play-kind">Architecture</p><p class="play-title">Limited &amp; Unlimited</p></a></li>
-        <li class="play-item"><a class="play-link" href="https://www.vickeydesign.com/works/urban-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e277016598105b_Rectangle%20115.png" alt="Isolation &amp; Vitality, an urban design project" loading="lazy" decoding="async"></div><p class="play-kind">Urban design</p><p class="play-title">Isolation &amp; Vitality</p></a></li>
-        <li class="play-item"><a class="play-link" href="https://www.vickeydesign.com/works/marketing-design" target="_blank" rel="noopener noreferrer"><div class="play-media"><img src="https://cdn.prod.website-files.com/6179f4ae65e27772c0980fd0/6179f4ae65e277b64298108f_profolio%20DESIGN%20NEW%20copy_Page_19.png" alt="Graphic design and poster, a marketing design project" loading="lazy" decoding="async"></div><p class="play-kind">Marketing design</p><p class="play-title">Graphic design &amp; poster</p></a></li>
-      </ul>
     </section>
 
     <section class="how" id="how-i-work" aria-labelledby="how-heading">
@@ -211,7 +239,7 @@
       <h2 id="how-heading">Deep enough to map. Fast enough to simplify.</h2>
 
       <div class="steps">
-        <article class="step">
+        <article class="step" data-tone="see">
           <svg class="step-art" viewBox="0 0 270 245" role="img" aria-label="Scattered points settle into position and link into a network">
             <title>See the real problem</title>
             <g data-network></g>
@@ -220,7 +248,7 @@
           <p class="description">I look past the surface ask and find the structure underneath.</p>
         </article>
 
-        <article class="step">
+        <article class="step" data-tone="people">
           <svg class="step-art" viewBox="0 0 270 245" role="img" aria-label="Scattered points settle into three clear groups">
             <title>Turn ambiguity into clarity</title>
             <g data-blobs>
@@ -235,7 +263,7 @@
           <p class="description">I build frameworks and concepts that make the problem understandable.</p>
         </article>
 
-        <article class="step">
+        <article class="step" data-tone="clarity">
           <svg class="step-art" viewBox="0 0 270 245" role="img" aria-label="One considered path is drawn through several possible routes">
             <title>Move fast with judgment</title>
             <g data-branches>
