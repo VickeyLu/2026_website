@@ -48,10 +48,11 @@ One long page; only case studies get their own pages. Nav: Work · About · Resu
 - Opening: see above. Always running: swing loop video; a meteor passes behind her every 12–20s.
 - Hero → page: scene scales to ~0.95 and dims ~50%; the curved horizon straightens into the page's top edge. She stays in front of the line.
 - About chapters: line drawn 1:1 with scroll; no timers.
-- **Self-moving content (rule changed 2026-10-14; Vickey: "nobody will click on their own"):** exactly two things move on their own —
+- **Self-moving content (rule changed 2026-10-14; Vickey: "nobody will click on their own"):** at the time, exactly two things moved on their own —
   - About rotator: one slot, one line at a time, 2.4s per line, rolls up like a wheel, loops. (Tried first and rejected: lines revealed with the scroll; lines stacking up one by one.)
   - Kind words: next set every 10s while on screen, with a thin progress line under the controls.
   - Both pause on hover (Kind words also on focus/touch), stop when off screen, and are off under reduced motion.
+- **2026-10-15: the "only two things move on their own" limit was removed** (Vickey). Prompted by the footer face idea (eyes follow the pointer, blink). The two items above still move as described.
 - Everywhere else: crossfades (400ms); off under reduced motion. Still never: bouncing, physics UI, parallax text.
 
 ## Testimonials — "Kind words" (updated 2026-10-14)

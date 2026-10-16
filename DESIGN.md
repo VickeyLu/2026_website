@@ -157,10 +157,10 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 - Always running: seamless swing loop video (figure at 74% across on desktop, 66% on phones); a small meteor passes behind her every 12–20s.
 - **Hero → page:** the hero stays pinned while the paper page slides up over it. The scene scales to ~0.95 and dims ~50%; stops and corners fade in the first 18%; the curved horizon straightens into the page's top edge and fades out by ~95%. Her body stays in front of the line throughout. About one screen of scroll.
 - **Everywhere else:** crossfades ~400–450ms; line-by-line reveals 600ms with 80ms stagger. One easing family.
-- **Things that move on their own (only these two, changed 2026-10-14):**
+- **Things that move on their own** (the "only these two" limit was removed 2026-10-15):
   - About heading: one line at a time, Designer → Builder → Curious human, 2.4s each, loops while on screen.
   - Kind words: next set every 10s while the section is on screen; no visible paging controls. Reduced motion shows all quotes without auto-advance.
-  - Both pause on hover (and Kind words on focus or touch), stop when off screen or in a background tab, and are off under reduced motion. Manual controls always win.
+  - They pause on hover (and Kind words on focus or touch), stop when off screen or in a background tab, and are off under reduced motion. Manual controls always win.
 - **Never:** bouncing, swinging/physics UI, parallax on text, anything that moves without a way to pause it.
 - Everything respects `prefers-reduced-motion` (video paused, no fades).
 
