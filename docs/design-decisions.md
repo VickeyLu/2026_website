@@ -53,6 +53,7 @@ One long page; only case studies get their own pages. Nav: Work · About · Resu
   - Kind words: next set every 10s while on screen, with a thin progress line under the controls.
   - Both pause on hover (Kind words also on focus/touch), stop when off screen, and are off under reduced motion.
 - **2026-10-15: the "only two things move on their own" limit was removed** (Vickey). Prompted by the footer face idea (eyes follow the pointer, blink). The two items above still move as described.
+- **2026-10-15: curious face added to the footer** (Vickey; reference: eyetracker.framer.ai). Ink ball beside "Still curious?", eyes follow the mouse, blink, glance when idle. Written from scratch in vanilla JS (no Framer code). Heading kept at the current regular weight; the bold "Still Curious?" in her reference screenshot was not adopted (not decided).
 - Everywhere else: crossfades (400ms); off under reduced motion. Still never: bouncing, physics UI, parallax text.
 
 ## Testimonials — "Kind words" (updated 2026-10-14)

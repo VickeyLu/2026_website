@@ -115,6 +115,8 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 
 **Contact** — "Still curious?" (contact display), one line of lede, links as underlined text (Email me · LinkedIn · Resume). No repeated coordinates below the links.
 
+**Curious face (footer, added 2026-10-15)** — a 96px ink ball (72px under 600px) to the right of the heading + lede, 48px gap, vertically centred; on phones it wraps under the lede. Two paper-coloured eye pills (7×13px, 10px apart). Decorative (`aria-hidden`). Markup: `.contact-head` > `[data-peeker]` > `[data-peeker-eyes]`; behaviour in `about.js`.
+
 **Placeholder** — `.is-placeholder`: `--soft` fill, radius 16. Used until real images arrive.
 
 **Local spacing and readability refinements** — About intro text is vertically centered beside the portrait; chapters follow after `clamp(64px, 9vh, 96px)`. Chapter hairlines use `--line-color`. Selected work heading-to-content spacing is `clamp(48px, 8vh, 80px)`; all four descriptions share 14px / 1.6 / ink-2. The first project video retains its 1.48 aspect ratio on phones instead of a taller crop. Contact links retain their text underline with a 44px minimum hit height.
@@ -160,6 +162,7 @@ Radius: pill for nav and buttons, 16px for media, 0 for text blocks. Cards and s
 - **Things that move on their own** (the "only these two" limit was removed 2026-10-15):
   - About heading: one line at a time, Designer → Builder → Curious human, 2.4s each, loops while on screen.
   - Kind words: next set every 10s while the section is on screen; no visible paging controls. Reduced motion shows all quotes without auto-advance.
+  - Curious face (footer): eyes turn toward the mouse (sliding up to 30% of the ball's width from centre and narrowing up to 45% when looking sideways); blinks every 2.6–6s; after 3.5s without mouse movement it glances around. Touch screens: blink and glance only. Runs only while on screen; off under reduced motion (eyes centred, no blink).
   - They pause on hover (and Kind words on focus or touch), stop when off screen or in a background tab, and are off under reduced motion. Manual controls always win.
 - **Never:** bouncing, swinging/physics UI, parallax on text, anything that moves without a way to pause it.
 - Everything respects `prefers-reduced-motion` (video paused, no fades).
@@ -200,7 +203,7 @@ The temperature rises down the page: cinematic at the top, the person at the end
 | `hero-space.css` / `hero-space.js` | Hero framing, opening timeline, horizon + stops, line occlusion masks, corner text, meteor, scroll transition, nav-on-dark |
 | `selected-work.css` / `selected-work.js` | Project rows, media, hover label |
 | `testimonial.css` / `testimonial.js` | Kind words quote sets and paging |
-| `about.css` / `about.js` | About rotator, chapters horizon, Playground, Contact |
+| `about.css` / `about.js` | About rotator, chapters horizon, Playground, Contact, curious face |
 | `nav.js` | Scrolled state of the nav |
 | `assets/hero/` | `swing-loop.mp4`, `poster.webp`, `matte.webp` (her lower body per video frame, 16×10 sprite), `occ.png` (meteor occlusion mask), `og.jpg` |
 
