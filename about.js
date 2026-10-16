@@ -59,3 +59,52 @@
   addEventListener('resize', update, { passive: true });
   update();
 })();
+
+// Footer: a small curious face. The eyes turn toward the pointer (sliding toward the ball's edge and
+// narrowing, as if the ball turned), it blinks every few seconds, and when nobody moves for a while it
+// glances around on its own. Runs only while on screen. Touch screens: blinks and glances only.
+// Reduced motion: eyes stay centred, no blinking.
+(() => {
+  const ball = document.querySelector('[data-peeker]');
+  const eyes = ball && ball.querySelector('[data-peeker-eyes]');
+  if (!ball || !eyes || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let tx = 0, ty = 0, x = 0, y = 0;              // target and current look direction, -1..1
+  let lastMove = 0, raf = 0, visible = false, blinkAt = 0, glanceAt = 0;
+  const now = () => performance.now();
+
+  function lookAt(px, py) {
+    const r = ball.getBoundingClientRect();
+    const dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height / 2);
+    const d = Math.hypot(dx, dy) || 1, reach = Math.min(1, d / 260);  // far pointer = full turn
+    tx = dx / d * reach; ty = dy / d * reach;
+    lastMove = now();
+  }
+  addEventListener('pointermove', e => { if (e.pointerType === 'mouse') lookAt(e.clientX, e.clientY); }, { passive: true });
+
+  function blink() {
+    ball.classList.add('is-blinking');
+    setTimeout(() => ball.classList.remove('is-blinking'), 130);
+    blinkAt = now() + 2600 + Math.random() * 3400;
+  }
+
+  function frame() {
+    const t = now();
+    if (t > blinkAt) blink();
+    // idle: an occasional glance somewhere, then back toward the middle
+    if (t - lastMove > 3500 && t > glanceAt) {
+      const a = Math.random() * Math.PI * 2, k = Math.random() < .35 ? 0 : .5 + Math.random() * .4;
+      tx = Math.cos(a) * k; ty = Math.sin(a) * k * .6;
+      glanceAt = t + 1400 + Math.random() * 1800;
+    }
+    x += (tx - x) * .14; y += (ty - y) * .14;      // ease toward the target
+    const R = ball.offsetWidth * .3;               // how far the eyes travel from the centre
+    const squash = 1 - .45 * Math.abs(x);           // turned sideways: the eyes narrow
+    eyes.style.transform = `translate(calc(-50% + ${(x * R).toFixed(2)}px), calc(-50% + ${(y * R * .8).toFixed(2)}px)) scaleX(${squash.toFixed(3)})`;
+    raf = requestAnimationFrame(frame);
+  }
+  const run = () => { if (visible && !raf) { blinkAt = now() + 1200; raf = requestAnimationFrame(frame); } };
+  const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? run() : stop(); }).observe(ball);
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : run(); });
+})();
